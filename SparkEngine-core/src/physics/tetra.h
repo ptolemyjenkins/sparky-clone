@@ -3,7 +3,7 @@
 
 namespace sparky { namespace physics{
 	class Tetra {
-	private:
+	public:
 		maths::vec4 t1, t2, t3, t4;
 	public:
 		Tetra();
@@ -11,5 +11,6 @@ namespace sparky { namespace physics{
 
 		float volume();
 		maths::vec4 COM();
+		
 	};
 } }

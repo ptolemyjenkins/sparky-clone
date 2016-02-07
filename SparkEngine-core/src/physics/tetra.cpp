@@ -25,4 +25,6 @@ namespace sparky { namespace physics {
 		return (t1 + t2 + t3 + t4) / 4.0;
 	}
 
+
+
 } }
