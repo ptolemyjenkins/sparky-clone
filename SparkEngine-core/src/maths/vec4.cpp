@@ -30,6 +30,21 @@ namespace sparky { namespace maths {
 			return a;
 		}
 
+		float vec4::length() const
+		{
+			return sqrt(x * x + y * y + z * z + w * w);
+		}
+
+		vec4 & vec4::normalised()
+		{
+			float len = length();
+			x /= len;
+			y /= len;
+			z /= len;
+			w /= len;
+			return *this;
+		}
+
 		float vec4::max()
 		{
 			return std::max(std::max(x, y), std::max(z, w));

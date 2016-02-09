@@ -17,6 +17,8 @@ namespace sparky { namespace maths {
 		float dot(const vec4& other) const;
 		vec4 cross(const vec4& other) const;
 
+		float length() const;
+		vec4& normalised();
 		float max();
 		vec4& add(const vec4& other);
 		vec4& subtract(const vec4& other);

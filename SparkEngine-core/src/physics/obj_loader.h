@@ -10,6 +10,8 @@ namespace sparky {
 	public:
 		std::vector<maths::vec4> verts;
 		std::vector<int> indices;
+		std::vector<maths::vec4> norms;
+		std::vector<int> nindices;
 		fileLoader(std::string filename);
 
 
