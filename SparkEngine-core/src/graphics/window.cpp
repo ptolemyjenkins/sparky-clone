@@ -26,7 +26,7 @@ namespace sparky { namespace graphics {
 	{
 		if (!glfwInit())
 			std::cerr << "ERROR: glfw init failed" << std::endl;
-		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, glfwGetPrimaryMonitor(), NULL);
+		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL/*glfwGetPrimaryMonitor()*/, NULL);
 		if (!m_Window)
 		{
 			std::cerr << "ERROR: Failed to create GLFW Window" << std::endl;

@@ -81,8 +81,8 @@
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediates\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Dependencies\GLFW\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib-vc2013;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\GLFW\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\GLEW\lib;$(SolutionDir)Dependencies\GLFW\lib-vc2013;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Dependencies\GLFW\include;$(IncludePath)</IncludePath>
@@ -106,10 +106,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -170,6 +171,9 @@
     <ClCompile Include="src\maths\vec3.cpp" />
     <ClCompile Include="src\maths\vec4.cpp" />
     <ClCompile Include="src\maths\vec2.cpp" />
+    <ClCompile Include="src\physics\Asolids.cpp" />
+    <ClCompile Include="src\physics\obj_loader.cpp" />
+    <ClCompile Include="src\physics\piece.cpp" />
     <ClCompile Include="src\physics\tetra.cpp" />
     <ClCompile Include="src\profiling\profileTimer.cpp" />
     <ClCompile Include="src\ResourceManagment\MeshResource.cpp" />
@@ -193,6 +197,10 @@
     <ClInclude Include="src\graphics\mesh.h" />
     <ClInclude Include="src\graphics\renderingEngine.h" />
     <ClInclude Include="src\graphics\texture.h" />
+    <ClInclude Include="src\physics\Asolids.h" />
+    <ClInclude Include="src\physics\obj_loader.h" />
+    <ClInclude Include="src\physics\physics.h" />
+    <ClInclude Include="src\physics\piece.h" />
     <ClInclude Include="src\physics\tetra.h" />
     <ClInclude Include="src\ResourceManagment\Mapping.h" />
     <ClInclude Include="src\ResourceManagment\MeshResource.h" />
