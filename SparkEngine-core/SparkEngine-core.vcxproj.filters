@@ -234,12 +234,4 @@
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.vert" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\models\toroid.obj" />
-    <Object Include="res\models\cube.obj" />
-    <Object Include="res\models\mushroom.obj" />
-    <Object Include="res\models\simple_sphere.obj" />
-    <Object Include="res\models\skinner.obj" />
-    <Object Include="res\models\smoothcunt.obj" />
-  </ItemGroup>
 </Project>
