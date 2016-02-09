@@ -43,13 +43,13 @@ namespace sparky {
 					int b = arr[i].find_last_of('/');
 					arr2[i-1] = arr[i].substr(b+1);
 				}
-				indices.push_back(stof(arr1[0]));
-				indices.push_back(stof(arr1[1]));
-				indices.push_back(stof(arr1[2]));
+				indices.push_back((int) stof(arr1[0]));
+				indices.push_back((int) stof(arr1[1]));
+				indices.push_back((int) stof(arr1[2]));
 
-				nindices.push_back(stof(arr2[0]));
-				nindices.push_back(stof(arr2[1]));
-				nindices.push_back(stof(arr2[2]));
+				nindices.push_back((int) stof(arr2[0]));
+				nindices.push_back((int) stof(arr2[1]));
+				nindices.push_back((int) stof(arr2[2]));
 			}
 		}
 	}
