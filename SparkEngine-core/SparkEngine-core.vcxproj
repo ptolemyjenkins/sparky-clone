@@ -225,6 +225,14 @@
     <None Include="res\shaders\basic.v" />
     <None Include="res\shaders\basic.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\models\cube.obj" />
+    <Object Include="res\models\mushroom.obj" />
+    <Object Include="res\models\simple_sphere.obj" />
+    <Object Include="res\models\skinner.obj" />
+    <Object Include="res\models\smoothcunt.obj" />
+    <Object Include="res\models\toroid.obj" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
