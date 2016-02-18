@@ -1,10 +1,9 @@
 #pragma once
 #include "../ResourceManagment/Mapping.h"
-
+#include "texture.h"
 #include <unordered_map>
 
 namespace sparky { namespace graphics {
-	class Texture;
 	class Material : public resource::Mapping {
 	private:
 		const std::string defaultDiffuse;

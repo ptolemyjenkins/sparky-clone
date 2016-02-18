@@ -1,10 +1,7 @@
 #pragma once
 #include "Renderable3D.h"
 
-namespace sparky { 
-	class CoreEngine;
-	namespace graphics {class RenderingEngine;}
-	namespace architecture {
+namespace sparky { namespace architecture {
 	class Application
 	{
 	private:

@@ -1,5 +1,4 @@
 #include "window.h"
-
 namespace sparky { namespace graphics {
 	void window_resize(GLFWwindow *window, int width, int height);
 	Window::Window(const char * title, int width, int height)

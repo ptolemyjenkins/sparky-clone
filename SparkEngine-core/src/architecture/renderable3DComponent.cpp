@@ -13,6 +13,11 @@ namespace sparky { namespace architecture {
 
 	}
 
+	void Renderable3DComponent::render(graphics::Shader shader, graphics::RenderingEngine renderingEngine)
+	{
+
+	}
+
 	graphics::Transform & Renderable3DComponent::getTransform()
 	{
 		return (*parent).getTransform();

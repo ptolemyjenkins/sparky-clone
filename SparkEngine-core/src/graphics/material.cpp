@@ -1,5 +1,4 @@
 #include "material.h"
-#include "texture.h"
 namespace sparky { namespace graphics {
 	
 	Material::Material()

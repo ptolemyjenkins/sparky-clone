@@ -1,10 +1,10 @@
 #pragma once
-#include "../../maths/maths.h"
-#include "../../coreEngine.h"
 #include "../renderable3DComponent.h"
 
 
-namespace sparky { namespace components {
+namespace sparky { 
+	class coreEngine;
+	namespace components {
 	class baseLight : public architecture::Renderable3DComponent{
 	private:
 		maths::vec4 colour;
@@ -14,7 +14,7 @@ namespace sparky { namespace components {
 		baseLight();
 		baseLight(maths::vec4 colour, float intensity);
 
-		void addToEngine(const CoreEngine const engine);
+		void addToEngine(const CoreEngine engine);
 
 		void setIntensity(float intensity);
 		float getIntensity();

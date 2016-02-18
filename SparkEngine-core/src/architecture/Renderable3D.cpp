@@ -1,5 +1,6 @@
 #include "Renderable3D.h"
 #include "application.h"
+#include "../graphics/renderingEngine.h"
 namespace sparky { namespace architecture {
 	Renderable3D::Renderable3D()
 	{
@@ -38,6 +39,15 @@ namespace sparky { namespace architecture {
 			children.at(i).updateAll(delta);
 		}
 		update(delta);
+	}
+
+	void Renderable3D::renderAll(graphics::Shader shader, graphics::RenderingEngine renderingEngine)
+	{
+		for (int i = 0; i < (int)children.size(); i++)
+		{
+			children.at(i).renderAll(shader, renderingEngine);
+		}
+		render(shader, renderingEngine);
 	}
 
 	graphics::Transform & Renderable3D::getTransform()
@@ -82,6 +92,14 @@ namespace sparky { namespace architecture {
 		for (int i = 0; i < (int)components.size(); i++)
 		{
 			components.at(i).update(delta);
+		}
+	}
+
+	void Renderable3D::render(graphics::Shader shader, graphics::RenderingEngine renderingEngine)
+	{
+		for (int i = 0; i < (int)components.size(); i++)
+		{
+			components.at(i).render(shader,renderingEngine);
 		}
 	}
 

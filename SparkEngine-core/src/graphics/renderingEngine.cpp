@@ -1,39 +1,38 @@
 #include "renderingEngine.h"
+#include "../coreEngine.h"
 
 namespace sparky { namespace graphics {
 	RenderingEngine::RenderingEngine()
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		//lights = new ArrayList<BaseLight>();
-		//samplerMap = new HashMap<String, Integer>();
 
-		//samplerMap.put("diffuse", 0);
-		//samplerMap.put("normalMap", 1);
-		//samplerMap.put("dispMap", 2);
+		samplerMap["diffuse"] =  0;
+		samplerMap["normalMap"] = 1;
+		samplerMap["dispMap"] =  2;
 
-		//addVector3f("ambient", new Vector3f(0.0f, 0.0f, 0.0f));
+		addVec3("ambient", maths::vec3(0.0f, 0.0f, 0.0f));
 
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_DEPTH_CLAMP);
-		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}
 
 	void RenderingEngine::render(architecture::Renderable3D* object) {
-//		forwardAmbient = new Shader("forward-ambient");
+		forwardAmbient = &graphics::Shader("forward-ambient", "forward-ambient.vert", "forward-ambient.frag");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//		object.renderAll(forwardAmbient, this);
+		object->renderAll(*forwardAmbient, *this);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(false);
 		glDepthFunc(GL_EQUAL);
 
-		//for (BaseLight light : lights) {
-		//	activeLight = light;
-		//	object.renderAll(light.getShader(), this);
-		//}
+		for (components::baseLight* light : lights) {
+			activeLight = light;
+			object->renderAll(*light->getShader(), *this);
+		}
 
 		glDepthFunc(GL_LESS);
 		glDepthMask(true);
@@ -43,5 +42,26 @@ namespace sparky { namespace graphics {
 	void RenderingEngine::setClearColour(maths::vec3 colour)
 	{
 		glClearColor(colour.x, colour.y, colour.z, 1.0f);
+	}
+
+	void RenderingEngine::setMainCamera(components::camera* cam)
+	{
+		mainCamera = cam;
+	}
+	components::camera* RenderingEngine::getMainCamera()
+	{
+		return mainCamera;
+	}
+	int RenderingEngine::getSamplerSlot(std::string samplerName)
+	{
+		return samplerMap[samplerName];
+	}
+	void RenderingEngine::addLight(components::baseLight* light)
+	{
+		lights.push_back(light);
+	}
+	components::baseLight* RenderingEngine::getActiveLight()
+	{
+		return activeLight;
 	}
 } }

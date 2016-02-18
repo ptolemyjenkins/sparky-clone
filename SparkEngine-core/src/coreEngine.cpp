@@ -41,8 +41,8 @@ namespace sparky {
 		double unaccounted = 0;
 		app->init();
 //TEMP________________________________________________________________________________________________________________________________________
-		graphics::Shader shader("res/shaders/basic.vert", "res/shaders/basic.frag");
-		shader.enable();
+		graphics::Shader shader("basic","res/shaders/basic.vert", "res/shaders/basic.frag");
+		shader.bind();
 		GLfloat vertices[] =
 		{
 			-4, -2.31f, 0,
@@ -150,5 +150,15 @@ namespace sparky {
 			
 		}
 		std::cout << "[Core Engine Terminated]" << std::endl;
+	}
+
+	graphics::RenderingEngine * CoreEngine::getRenderingEngine()
+	{
+		return renderingEngine;
+	}
+
+	architecture::Application * CoreEngine::getApplication()
+	{
+		return app;
 	}
 }

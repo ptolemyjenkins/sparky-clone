@@ -1,4 +1,6 @@
 #include "baseLight.h"
+#include "../../coreEngine.h"
+
 namespace sparky { namespace components {
 	baseLight::baseLight() {
 		this->colour = maths::vec4(0,0,0,1);
@@ -12,7 +14,7 @@ namespace sparky { namespace components {
 		this->shader = NULL;
 	}
 
-	void baseLight::addToEngine(const CoreEngine const engine)
+	void baseLight::addToEngine(const CoreEngine engine)
 	{
 		//Engine.getRenderingEngine().addLight(this);
 

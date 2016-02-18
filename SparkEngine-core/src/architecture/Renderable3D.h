@@ -2,8 +2,6 @@
 #include "renderable3DComponent.h"
 
 namespace sparky { namespace architecture {
-	class Application;
-	class RendingEngine;
 	class Renderable3D
 	{
 	private:
@@ -17,7 +15,7 @@ namespace sparky { namespace architecture {
 		Renderable3D& addComponent(Renderable3DComponent component);
 		void inputAll(const float& delta);
 		void updateAll(const float& delta);
-		void renderAll(graphics::Shader shader, RenderingEngine renderingEngine);
+		void virtual renderAll(graphics::Shader shader, graphics::RenderingEngine renderingEngine);
 		graphics::Transform& getTransform();
 		void updateTransforms();
 		void setApplication(Application* app);
@@ -25,6 +23,6 @@ namespace sparky { namespace architecture {
 	private:
 		void input(const float& delta);
 		void update(const float& delta);
-		void render(graphics::Shader shader, RenderingEngine renderingEngine);
+		void render(graphics::Shader shader, graphics::RenderingEngine renderingEngine);
 	};
 } }

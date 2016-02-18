@@ -23,6 +23,8 @@ namespace sparky {
 		void stop();
 		void run();
 		
+		graphics::RenderingEngine* getRenderingEngine();
+		architecture::Application* getApplication();
 
 	};
 }
