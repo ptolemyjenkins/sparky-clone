@@ -248,22 +248,5 @@
     <None Include="res\shaders\basic.f" />
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.vert" />
-    <None Include="res\shaders\forward-ambient.fs" />
-    <None Include="res\shaders\forward-ambient.vs" />
-    <None Include="res\shaders\forward-directional.fs" />
-    <None Include="res\shaders\forward-directional.vs" />
-    <None Include="res\shaders\forward-point.fs" />
-    <None Include="res\shaders\forward-point.vs" />
-    <None Include="res\shaders\forward-spot.fs" />
-    <None Include="res\shaders\forward-spot.vs" />
-    <None Include="res\shaders\GUI.fs" />
-    <None Include="res\shaders\GUI.vs" />
-    <None Include="res\shaders\lighting.fsh" />
-    <None Include="res\shaders\lighting.glh" />
-    <None Include="res\shaders\lightingMain.fsh" />
-    <None Include="res\shaders\sampling.glh" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="res\shaders\lighting.vsh" />
   </ItemGroup>
 </Project>
