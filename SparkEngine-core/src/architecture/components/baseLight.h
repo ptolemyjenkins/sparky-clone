@@ -14,7 +14,7 @@ namespace sparky {
 		baseLight();
 		baseLight(maths::vec4 colour, float intensity);
 
-		void addToEngine(const CoreEngine engine);
+		void addToEngine(CoreEngine* engine);
 
 		void setIntensity(float intensity);
 		float getIntensity();
@@ -22,7 +22,7 @@ namespace sparky {
 		void setColour(maths::vec4 colour);
 		maths::vec4 getColour();
 
-		void setShader(graphics::Shader shader);
+		void setShader(graphics::Shader &shader);
 		graphics::Shader* getShader();
 
 	};

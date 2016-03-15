@@ -28,6 +28,7 @@ namespace sparky { namespace graphics {
 	Texture::~Texture()
 	{
 		if (resource->removeReference() && fileName != "") {
+			delete resource;
 			if (loadedTextures.find(fileName) != loadedTextures.end()) {
 				loadedTextures.erase(fileName);
 			}
@@ -53,13 +54,14 @@ namespace sparky { namespace graphics {
 		return resource->getID();
 	}
 
-	resource::TextureResource * Texture::loadTexture(std::string fileName)
+	resource::TextureResource* Texture::loadTexture(std::string fileName)
 	{
-		resource::TextureResource resource = resource::TextureResource();
+		resource::TextureResource* resource1 = new resource::TextureResource();
 		try {
 			int width, height, numComponents;
-			unsigned char* imageData = stbi_load(strcat("./res/textures/",fileName.c_str()), &width, &height, &numComponents, 4);
-			glBindTexture(GL_TEXTURE_2D, resource.getID());
+			std::string pre = "./res/textures/";
+			unsigned char* imageData = stbi_load((pre + fileName).c_str(), &width, &height, &numComponents, 4);
+			glBindTexture(GL_TEXTURE_2D, resource1->getID());
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -74,6 +76,6 @@ namespace sparky { namespace graphics {
 			std::cout << e.what() << std::endl;
 			exit(1);
 		}
-		return &resource;
+		return resource1;
 	}
 } }

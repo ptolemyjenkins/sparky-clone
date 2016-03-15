@@ -7,6 +7,7 @@
 
 #include "../graphics/constructs/transform.h"
 #include "material.h"
+#include <algorithm>
 
 
 
@@ -34,9 +35,10 @@ namespace sparky {
 	class Shader
 	{
 	private:
-		static std::unordered_map<std::string, resource::ShaderResource> loadedShaders;
+		static std::vector<std::string> loadedShaderMap;
+		static std::vector<resource::ShaderResource*> loadedShaders;
 
-		resource::ShaderResource m_resource;
+		resource::ShaderResource* m_resource;
 		const char *m_VertPath, *m_FragPath;
 		char *m_FileName;
 	public:
@@ -44,6 +46,7 @@ namespace sparky {
 		Shader( char * fileName, const char* vertexPath, const char* fragPath);
 		~Shader();
 
+		void init(char * fileName, const char* vertexPath, const char* fragPath);
 
 		void setUniformMat4(const GLchar* name, const maths::mat4& matrix);
 		void setUniform1f(const GLchar* name, float value);
@@ -59,8 +62,8 @@ namespace sparky {
 	private:
 		GLint getUniformLocation(const GLchar* name);
 		GLuint load();
-		bool addVertexShader();
-		bool addFragmentShader();
+		bool addVertexShader(std::string shaderString);
+		bool addFragmentShader(std::string shaderString);
 		void compileShader();
 
 		void addAllUniforms(std::string shaderText, std::string fileName);

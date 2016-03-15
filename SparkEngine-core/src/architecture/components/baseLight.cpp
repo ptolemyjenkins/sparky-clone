@@ -14,7 +14,7 @@ namespace sparky { namespace components {
 		this->shader = NULL;
 	}
 
-	void baseLight::addToEngine(const CoreEngine engine)
+	void baseLight::addToEngine(CoreEngine* engine)
 	{
 		//Engine.getRenderingEngine().addLight(this);
 
@@ -40,7 +40,7 @@ namespace sparky { namespace components {
 		return maths::vec4();
 	}
 
-	void baseLight::setShader(graphics::Shader shader)
+	void baseLight::setShader(graphics::Shader &shader)
 	{
 		this->shader = &shader;
 	}

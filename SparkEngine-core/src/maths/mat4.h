@@ -23,6 +23,9 @@ namespace sparky { namespace maths {
 		mat4& multiply(const mat4& other);
 		vec3& transform(vec3& other) const;
 
+		void transpose();
+		void display();
+
 		static mat4 identity();
 		static mat4 orthographic(float left, float right, float bottom, float top, float near, float far);
 		static mat4 perspective(float fov, float aspect, float near, float far);

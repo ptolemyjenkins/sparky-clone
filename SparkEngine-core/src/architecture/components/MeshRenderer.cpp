@@ -7,11 +7,23 @@ namespace sparky {  namespace components {
 		this->material = material;
 	}
 
-	void MeshRenderer::render(graphics::Shader shader, graphics::RenderingEngine renderingEngine)
+	MeshRenderer::~MeshRenderer()
+	{
+		std::cout << "delete mesh rend" << std::endl;
+		delete mesh;
+		delete material;
+	}
+
+	void MeshRenderer::render(graphics::Shader &shader, graphics::RenderingEngine &renderingEngine)
 	{
 		shader.bind();
-		//shader.updateUniforms(getTransform(), *material, renderingEngine);
+		shader.updateUniforms(getTransform(), *material, renderingEngine);
 		mesh->draw();
+	}
+
+	void MeshRenderer::addToEngine(CoreEngine * engine)
+	{
+
 	}
 
 	

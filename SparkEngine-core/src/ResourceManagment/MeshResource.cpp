@@ -1,7 +1,11 @@
 #include "MeshResource.h"
 namespace sparky { namespace resource {
 	MeshResource::MeshResource() {
-		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &posVbo);
+		glGenBuffers(1, &norVbo);
+		glGenBuffers(1, &texVbo);
+		glGenBuffers(1, &tanVbo);
+
 		glGenBuffers(1, &ibo);
 		glGenVertexArrays(1, &vao);
 		this->size = 0;
@@ -10,7 +14,11 @@ namespace sparky { namespace resource {
 
 	MeshResource::MeshResource(int size)
 	{
-		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &posVbo);
+		glGenBuffers(1, &norVbo);
+		glGenBuffers(1, &texVbo);
+		glGenBuffers(1, &tanVbo);
+
 		glGenBuffers(1, &ibo);
 		glGenVertexArrays(1, &vao);
 		this->size = size;
@@ -19,7 +27,11 @@ namespace sparky { namespace resource {
 
 	MeshResource::~MeshResource()
 	{
-		glDeleteBuffers(1, &vbo);
+		glDeleteBuffers(1, &posVbo);
+		glDeleteBuffers(1, &norVbo);
+		glDeleteBuffers(1, &texVbo);
+		glDeleteBuffers(1, &tanVbo);
+
 		glDeleteBuffers(1, &ibo);
 		glDeleteVertexArrays(1, &vao);
 	}

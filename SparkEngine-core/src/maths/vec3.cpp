@@ -103,6 +103,11 @@ namespace sparky { namespace maths {
 		return a;
 	}
 
+	void vec3::display()
+	{
+		std::cout << "vec3: [" << x << ", " << y << ", " << z << "]" << std::endl;
+	}
+
 	vec3 & vec3::absolute()
 	{
 		return set(abs(x), abs(y), abs(z));

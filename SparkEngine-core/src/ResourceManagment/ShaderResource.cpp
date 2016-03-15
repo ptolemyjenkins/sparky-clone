@@ -4,11 +4,15 @@
 namespace sparky { namespace resource {
 	ShaderResource::ShaderResource()
 	{
+		
+	}
+
+	void ShaderResource::init() {
 		this->m_ShaderID = glCreateProgram();
 		this->refCount = 1;
 
 		if (m_ShaderID == 0) {
-			util::Logging::Log("Shader creation failed: could not find valid memory location in constructor",1);
+			util::Logging::Log("Shader creation failed: could not find valid memory location in constructor", 1);
 		}
 	}
 
@@ -31,15 +35,15 @@ namespace sparky { namespace resource {
 	{
 		return m_ShaderID;
 	}
-	std::unordered_map<std::string, int> ShaderResource::getUniforms()
+	std::unordered_map<std::string, int>& ShaderResource::getUniforms()
 	{
 		return uniforms;
 	}
-	std::vector<std::string> ShaderResource::getUniformNames()
+	std::vector<std::string>& ShaderResource::getUniformNames()
 	{
 		return uniformNames;
 	}
-	std::vector<std::string> ShaderResource::getUniformTypes()
+	std::vector<std::string>& ShaderResource::getUniformTypes()
 	{
 		return uniformTypes;
 	}

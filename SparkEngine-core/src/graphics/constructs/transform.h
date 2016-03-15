@@ -29,6 +29,7 @@ namespace sparky {	namespace graphics {
 		void rotateTrans(const quaternion& rotation);
 		void translateTrans(const vec3& translation);
 		void scaleTrans(const vec3& scale_);
+
 		void setRotation(const quaternion& rotation);
 		void setTranslation(const vec3& translation);
 		void setScale(const vec3& scale_);

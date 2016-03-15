@@ -1,6 +1,9 @@
 #pragma once
 #include "../ResourceManagment/MeshResource.h"
 #include "constructs\vertex.h"
+#include "../maths/vec4.h"
+#include <fstream>
+#include <sstream>
 #include <unordered_map>
 namespace sparky { namespace graphics {
 	class Mesh {

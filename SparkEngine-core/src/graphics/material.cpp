@@ -3,13 +3,20 @@ namespace sparky { namespace graphics {
 	
 	Material::Material()
 	{
-		addTexture("diffuse", &Texture(defaultDiffuse));
-		addTexture("normalMap", &Texture(defaultNormal));
-		addTexture("dispMap", &Texture(defaultDisp));
+		addTexture("diffuse", new Texture("Debug.png"));
+		addTexture("normalMap", new Texture("default_normal.png"));
+		addTexture("dispMap",  new Texture("default_disp.png"));
 		addFloat("specularIntensity", 1.0f);
 		addFloat("specularPower", 0.01f);
 		addFloat("dispMapScale", 0.0f);
 		addFloat("dispMapBias", 0.0f);
+	}
+
+	Material::Material(Texture * diffuse, float specularIntensity, float specularPower) : Material()
+	{
+		if (diffuse != nullptr) addTexture("diffuse", diffuse);
+		if (specularIntensity != 0) addFloat("specularIntensity", specularIntensity);
+		if (specularPower != 0) addFloat("specularPower", specularPower);
 	}
 
 	Material::Material(Texture* diffuse, float specularIntensity, float specularPower, Texture* normalMap, Texture* dispMap, float dispMapScale, float dispMapOffset) : Material()
@@ -26,7 +33,7 @@ namespace sparky { namespace graphics {
 
 	void Material::useDefaultNormal()
 	{
-		addTexture("normalMap", &Texture(defaultNormal));
+		addTexture("normalMap", &Texture("default_normal.png"));
 	}
 
 	void Material::addTexture(const std::string & name, Texture * texture)
@@ -50,7 +57,7 @@ namespace sparky { namespace graphics {
 
 	Material* Material::DebugMaterial()
 	{
-		this->addTexture("diffuse", &Texture(defaultDiffuse));
+		this->addTexture("diffuse", &Texture("Debug.png"));
 		this->addFloat("specularIntensity", 1.0f);
 		this->addFloat("specularPower", 0.01f);
 		return this;

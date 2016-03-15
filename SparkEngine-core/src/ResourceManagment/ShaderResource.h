@@ -13,15 +13,16 @@ namespace sparky { namespace resource {
 			std::vector<std::string> uniformTypes;
 		public:
 			ShaderResource();
+			void init();
 			~ShaderResource();
 
 			void addReference();
 			bool removeReference();
 
 			GLuint& getProgram();
-			std::unordered_map<std::string, int> getUniforms();
-			std::vector<std::string> getUniformNames();
-			std::vector<std::string> getUniformTypes();
+			std::unordered_map<std::string, int>& getUniforms();
+			std::vector<std::string>& getUniformNames();
+			std::vector<std::string>& getUniformTypes();
 
 		};
 } }

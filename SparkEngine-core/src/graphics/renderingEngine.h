@@ -13,7 +13,7 @@ namespace sparky { namespace graphics {
 	class RenderingEngine : public resource::Mapping
 	{
 	private:
-		graphics::Shader* forwardAmbient;
+		graphics::Shader &forwardAmbient = graphics::Shader();
 
 		components::baseLight* activeLight;
 		std::unordered_map<std::string, int> samplerMap;
@@ -22,8 +22,10 @@ namespace sparky { namespace graphics {
 		components::camera* mainCamera;
 	public:
 		RenderingEngine();
+		void initShaders();
+
 		void render(architecture::Renderable3D* object);
-		void setClearColour(maths::vec3 colour);
+		void setClearColour(maths::vec4 colour);
 
 		void setMainCamera(components::camera* cam);
 		components::camera* getMainCamera();

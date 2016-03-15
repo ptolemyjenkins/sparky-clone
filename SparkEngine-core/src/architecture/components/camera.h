@@ -12,7 +12,7 @@ namespace sparky {
 		camera();
 		camera(float fov, float aspect, float zNear, float zFar);
 
-		void addToEngine(const CoreEngine engine);
+		void addToEngine(CoreEngine* engine);
 
 		maths::mat4 getViewProjection();
 

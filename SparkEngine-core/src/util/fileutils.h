@@ -38,6 +38,7 @@ namespace sparky { namespace util {
 		static int find(std::string text, std::string phrase, int first) {
 			text = text.substr(first);
 			int i = text.find(phrase);
+			if (i == -1) return i;
 			return i + first;
 		}
 

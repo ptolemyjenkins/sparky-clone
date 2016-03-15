@@ -27,6 +27,8 @@ namespace sparky { namespace maths {
 		float max() const;
 		float dot(const vec3& other) const;
 		vec3 cross(const vec3& other) const;
+
+		void display();
 		
 		vec3& absolute();
 		vec3& normalised();

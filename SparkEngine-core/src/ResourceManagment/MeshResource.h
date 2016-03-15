@@ -3,7 +3,8 @@
 namespace sparky { namespace resource {
 	class MeshResource {
 	private:
-		GLuint vbo, ibo, vao;
+		GLuint posVbo, norVbo, texVbo, tanVbo;
+		GLuint ibo, vao;
 		int size, refCount;
 	public:
 		MeshResource();
@@ -12,15 +13,27 @@ namespace sparky { namespace resource {
 		void addReference();
 		bool removeReference();
 
-		int getVbo() {
-			return vbo;
+		GLuint& getPosVbo() {
+			return posVbo;
 		}
 
-		int getIbo() {
+		GLuint& getNorVbo() {
+			return norVbo;
+		}
+
+		GLuint& getTexVbo() {
+			return texVbo;
+		}
+
+		GLuint& getTanVbo() {
+			return tanVbo;
+		}
+
+		GLuint& getIbo() {
 			return ibo;
 		}
 
-		int getVao() {
+		GLuint& getVao() {
 			return vao;
 		}
 

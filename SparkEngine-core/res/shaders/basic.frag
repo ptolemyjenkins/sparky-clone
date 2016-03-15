@@ -1,12 +1,12 @@
 #version 330 core
 layout (location = 0) out vec4 fragColor;
 
-uniform vec4 col = vec4( 1.0 , 0.2 , 1.0 , 1.0 );
-uniform vec2 light_pos;
+in vec2 texCoord0;
 
-in vec4 pos;
+//uniform vec3 R_ambient;
+//uniform sampler2D diffuse;
+
 void main()
 {
-	float intensity = 1.0 /length(pos.xy - light_pos);
-	fragColor = col * intensity;
+	fragColor = vec4(0.7,0.3,0.4,1);//texture(diffuse,texCoord0) * vec4(R_ambient, 1);
 }

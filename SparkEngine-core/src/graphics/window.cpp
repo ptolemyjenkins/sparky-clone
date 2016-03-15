@@ -111,6 +111,16 @@ namespace sparky { namespace graphics {
 		y = m_my;
 	}
 
+	maths::vec2 Window::getMousePosition()
+	{
+		return maths::vec2(m_mx, m_my);
+	}
+
+	void Window::setMousePosition(double x, double y)
+	{
+		glfwSetCursorPos(m_Window, x, y);
+	}
+
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 	{
 		Window* win = (Window*)glfwGetWindowUserPointer(window);

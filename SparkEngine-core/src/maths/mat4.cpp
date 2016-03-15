@@ -30,14 +30,15 @@ namespace sparky { namespace maths {
 
 	mat4 & mat4::multiply(const mat4 & other)
 	{
+		mat4 init = *this;
 		for (int x = 0; x < 4; x++)
 		{
 			for (int y = 0; y < 4; y++)
 			{
-				set(x, y, get(x, 0) * other.get(0, y) +
-						  get(x, 1) * other.get(1, y) +
-						  get(x, 2) * other.get(2, y) +
-						  get(x, 3) * other.get(3, y));
+				set(x, y, init.get(0, y) * other.get(x, 0) +
+						  init.get(1, y) * other.get(x, 1) +
+						  init.get(2, y) * other.get(x, 2) +
+						  init.get(3, y) * other.get(x, 3));
 			}
 		}
 		return *this;
@@ -49,6 +50,31 @@ namespace sparky { namespace maths {
 				  other.x * get(0, 1) + other.y * get(1, 1) + other.z * get(2, 1) + get(3, 1),
 				  other.x * get(0, 2) + other.y * get(1, 2) + other.z * get(2, 2) + get(3, 2));
 		return other;
+	}
+
+	void mat4::transpose()
+	{
+		mat4 result = *this;
+		for (int x = 0; x < 4; x++)
+		{
+			for (int y = 0; y < 4; y++)
+			{
+				set(x, y, result.get(y, x));
+			}
+		}
+	}
+
+	void mat4::display()
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			std::cout << "[";
+			for (int x = 0; x < 4; x++)
+			{
+				std::cout << get(x, y) << " ";
+			}
+			std::cout << "]" << std::endl;
+		}
 	}
 
 	mat4 mat4::identity()

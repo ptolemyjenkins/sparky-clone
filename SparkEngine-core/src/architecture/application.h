@@ -4,19 +4,18 @@
 namespace sparky { namespace architecture {
 	class Application
 	{
-	private:
-		Renderable3D *root;
+	public:
+		Renderable3D root;
+		CoreEngine* engine = 0;
 	public:
 		Application();
 		virtual void init();
-		void input(float delta);
-		void update(float delta);
-		Renderable3D* render();
-		void addObject(Renderable3D object);
-		void addComponent(Renderable3DComponent component);
-		CoreEngine* engine = 0;
-	private:
-		Renderable3D * getRootRenderable3D();
-
+		virtual void input(float delta);
+		virtual void update(float delta);
+		Renderable3D* rootRender();
+		void addObject(Renderable3D* object);
+		void addComponent(Renderable3DComponent &component);
+		void setEngine(CoreEngine* engine);
+		CoreEngine* getEngine();
 	};
 } }

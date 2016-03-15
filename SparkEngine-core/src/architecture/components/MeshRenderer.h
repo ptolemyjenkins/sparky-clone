@@ -10,7 +10,9 @@ namespace sparky { namespace components {
 		graphics::Material* material;
 	public:
 		MeshRenderer(graphics::Mesh * mesh, graphics::Material * material);
-		void render(graphics::Shader shader, graphics::RenderingEngine renderingEngine);
+		~MeshRenderer();
+		void render(graphics::Shader &shader, graphics::RenderingEngine &renderingEngine);
+		void addToEngine(CoreEngine * engine);
 	};
 
 } }

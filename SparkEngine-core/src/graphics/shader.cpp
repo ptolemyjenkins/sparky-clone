@@ -6,42 +6,83 @@
 #include "../util/logging.h"
 
 namespace sparky { namespace graphics {
-	std::unordered_map<std::string, resource::ShaderResource> Shader::loadedShaders;
+	std::vector<std::string> Shader::loadedShaderMap;
+	std::vector<resource::ShaderResource*> Shader::loadedShaders;
+
 
 	Shader::Shader(char * fileName, const char * vertexPath, const char * fragPath)
 		: m_VertPath(vertexPath), m_FragPath(fragPath), m_FileName(fileName)
 	{
-		auto result = loadedShaders.find(fileName);
-		if (result != loadedShaders.end()) {
-			m_resource = result->second;
-			m_resource.addReference();
+		int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), fileName) - loadedShaderMap.begin();
+		if (pos < loadedShaderMap.size()) {
+			m_resource = loadedShaders[pos];
+			m_resource->addReference();
 		}
 		else {
-			m_resource = resource::ShaderResource();
-			loadedShaders[fileName] = m_resource;
-			if (addVertexShader() && addFragmentShader()) {
+			m_resource = new resource::ShaderResource();
+			m_resource->init();
+			loadedShaderMap.push_back(fileName);
+			loadedShaders.push_back(m_resource);
+			std::string pre = "./res/shaders/";
+			std::string vertShaderString = util::FileUtils::read_file((pre + m_VertPath).c_str());
+			std::string fragShaderString = util::FileUtils::read_file((pre + m_FragPath).c_str());
+			if (addVertexShader(vertShaderString) && addFragmentShader(fragShaderString)) {
 				compileShader();
 			}
 			else {
 				util::Logging::Log("Error: failed shader build",1);
 			}
-
-			//addAllUniforms(vertexShaderText, fileName);
-			//addAllUniforms(fragmentShaderText, fileName);
-
+			addAllUniforms(vertShaderString,fileName);
+			addAllUniforms(fragShaderString,fileName);
 		}
 	}
 
 	Shader::~Shader()
 	{
-		if (m_resource.removeReference()) {
-			loadedShaders.erase(m_FileName);
+		if (m_resource->removeReference()) {
+			int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), m_FileName) - loadedShaderMap.begin();
+			if (pos < loadedShaderMap.size()) {
+				loadedShaderMap.erase(loadedShaderMap.begin() + pos);
+				loadedShaders.erase(loadedShaders.begin() + pos);
+			}
+		}
+	}
+
+	void Shader::init(char * fileName, const char * vertexPath, const char * fragPath)
+	{
+		if (m_FileName != nullptr) {
+			util::Logging::Log("Error: Reinitialisation of shader", 1);
+		}
+		m_VertPath = vertexPath;
+		m_FragPath = fragPath;
+		m_FileName = fileName;
+		int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), fileName) - loadedShaderMap.begin();
+		if (pos < loadedShaderMap.size()) {
+			m_resource = loadedShaders[pos];
+			m_resource->addReference();
+		}
+		else {
+			m_resource = new resource::ShaderResource();
+			m_resource->init();
+			loadedShaderMap.push_back(fileName);
+			loadedShaders.push_back(m_resource);
+			std::string pre = "./res/shaders/";
+			std::string vertShaderString = util::FileUtils::read_file((pre + m_VertPath).c_str());
+			std::string fragShaderString = util::FileUtils::read_file((pre + m_FragPath).c_str());
+			if (addVertexShader(vertShaderString) && addFragmentShader(fragShaderString)) {
+				compileShader();
+			}
+			else {
+				util::Logging::Log("Error: failed shader build", 1);
+			}
+			addAllUniforms(vertShaderString, fileName);
+			addAllUniforms(fragShaderString, fileName);
 		}
 	}
 
 	void Shader::bind()
 	{
-		glUseProgram(m_resource.getProgram());
+		glUseProgram(m_resource->getProgram());
 	}
 
 	void Shader::disable() const
@@ -51,13 +92,12 @@ namespace sparky { namespace graphics {
 
 	GLint Shader::getUniformLocation(const GLchar * name)
 	{
-		return glGetUniformLocation(m_resource.getProgram(), name);
+		return glGetUniformLocation(m_resource->getProgram(), name);
 	}
 
-	bool Shader::addVertexShader()
+	bool Shader::addVertexShader(std::string shaderString)
 	{
-		if (m_VertPath == nullptr) return false;
-		std::string shaderString = util::FileUtils::read_file(m_VertPath);
+		
 		const char * text = shaderString.c_str();
 		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, &text, NULL);
@@ -74,15 +114,13 @@ namespace sparky { namespace graphics {
 			glDeleteShader(vertex);
 			return 0;
 		}
-		glAttachShader(m_resource.getProgram(), vertex);
+		glAttachShader(m_resource->getProgram(), vertex);
 		glDeleteShader(vertex);
 		return 1;
 	}
 
-	bool Shader::addFragmentShader()
+	bool Shader::addFragmentShader(std::string shaderString)
 	{
-		if (m_FragPath == nullptr) return false;
-		std::string shaderString = util::FileUtils::read_file(m_FragPath);
 		const char * text = shaderString.c_str();
 		GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &text, NULL);
@@ -99,15 +137,15 @@ namespace sparky { namespace graphics {
 			glDeleteShader(fragment);
 			return 0;
 		}
-		glAttachShader(m_resource.getProgram(), fragment);
+		glAttachShader(m_resource->getProgram(), fragment);
 		glDeleteShader(fragment);
 		return 1;
 	}
 
 	void Shader::compileShader()
 	{
-		glLinkProgram(m_resource.getProgram());
-		glValidateProgram(m_resource.getProgram());
+		glLinkProgram(m_resource->getProgram());
+		glValidateProgram(m_resource->getProgram());
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------
@@ -116,10 +154,10 @@ namespace sparky { namespace graphics {
 
 	void Shader::updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
 		mat4 model = transform.getTransformation();
-		mat4 MVP = renderingEngine.getMainCamera()->getViewProjection() * model;
-		for (int i = 0; i < m_resource.getUniformNames().size(); i++) {
-			std::string uniformName = m_resource.getUniformNames()[i];
-			std::string uniformType = m_resource.getUniformTypes()[i];
+		mat4 MVP = renderingEngine.getMainCamera()->getViewProjection() *  model;
+		for (int i = 0; i < m_resource->getUniformNames().size(); i++) {
+			std::string uniformName = m_resource->getUniformNames()[i];
+			std::string uniformType = m_resource->getUniformTypes()[i];
 
 			if (uniformType == "sampler2D") {
 				int samplerSlot = renderingEngine.getSamplerSlot(uniformName);
@@ -197,19 +235,19 @@ namespace sparky { namespace graphics {
 		std::string UNIFORM_KEYWORD = "uniform";
 		int uniformStartLocation = shaderText.find(UNIFORM_KEYWORD);
 		while (uniformStartLocation != -1) {
-			if (!(uniformStartLocation != 0 && (shaderText[uniformStartLocation - 1] == ' ' || shaderText[uniformStartLocation - 1] == ';') && shaderText[uniformStartLocation + UNIFORM_KEYWORD.length()] == ' ')) {
+			if (!(uniformStartLocation != 0 && (shaderText[uniformStartLocation - 1] == ' ' || shaderText[uniformStartLocation - 1] == ';' || shaderText[uniformStartLocation - 1] == '\n') && shaderText[uniformStartLocation + UNIFORM_KEYWORD.length()] == ' ')) {
 				uniformStartLocation = util::FileUtils::find(shaderText, UNIFORM_KEYWORD, uniformStartLocation + UNIFORM_KEYWORD.length());
 				continue;
 			}
 			int start = uniformStartLocation + UNIFORM_KEYWORD.length() + 1;
 			int end = util::FileUtils::find(shaderText, ";", start);
-			std::string uniformLine = util::FileUtils::trim(shaderText.substr(start, end));
+			std::string uniformLine = util::FileUtils::trim(shaderText.substr(start, end - start));
 			int whiteSpacePos = util::FileUtils::find(uniformLine, " ", 0);
-			std::string uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, uniformLine.length()));
+			std::string uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, uniformLine.length()- whiteSpacePos - 1));
 			std::string uniformType = util::FileUtils::trim(uniformLine.substr(0, whiteSpacePos));
 			if (fileName != "GUI") {
-				m_resource.getUniformNames().push_back(uniformName);
-				m_resource.getUniformTypes().push_back(uniformType);
+				m_resource->getUniformNames().push_back(uniformName);
+				m_resource->getUniformTypes().push_back(uniformType);
 			}
 			addUniform(uniformName, uniformType, structs);
 			uniformStartLocation = util::FileUtils::find(shaderText, UNIFORM_KEYWORD, uniformStartLocation + UNIFORM_KEYWORD.length());
@@ -229,7 +267,7 @@ namespace sparky { namespace graphics {
 			int nameStart = structStartLocation + STRUCT_KEYWORD.length() + 1;
 			int braceStart = util::FileUtils::find(shaderText, "{", nameStart);
 			int braceEnd = util::FileUtils::find(shaderText, "}", braceStart);
-			std::string structName = util::FileUtils::trim(shaderText.substr(nameStart, braceStart));
+			std::string structName = util::FileUtils::trim(shaderText.substr(nameStart, braceStart- nameStart));
 			std::vector<GLSLVar> glslStructs;
 			int componentSemicolonPos = util::FileUtils::find(shaderText, ";", braceStart);
 			while (componentSemicolonPos != -1 && componentSemicolonPos < braceEnd) {
@@ -242,8 +280,8 @@ namespace sparky { namespace graphics {
 				while (shaderText[componentTypeStart - 1] != ' ') {
 					componentTypeStart--;
 				}
-				std::string componentName = shaderText.substr(componentNameStart, componentSemicolonPos);
-				std::string componentType = shaderText.substr(componentTypeStart, componentTypeEnd);
+				std::string componentName = shaderText.substr(componentNameStart, componentSemicolonPos- componentNameStart);
+				std::string componentType = shaderText.substr(componentTypeStart, componentTypeEnd- componentTypeStart);
 				GLSLVar structComponents = GLSLVar(componentName, componentType);
 				glslStructs.push_back(structComponents);
 				componentSemicolonPos = util::FileUtils::find(shaderText,";", componentSemicolonPos + 1);
@@ -270,13 +308,14 @@ namespace sparky { namespace graphics {
 			return;
 		}
 
-		int uniformLocation = glGetUniformLocation(m_resource.getProgram(), uniformName.c_str());
+		int uniformLocation = glGetUniformLocation(m_resource->getProgram(), uniformName.c_str());
 
 		if (uniformLocation == 0xFFFFFFFF) {
 			util::Logging::Log("Error: Uniform " + uniformName + " could not be found", 1);
 		}
 
-		m_resource.getUniforms()[uniformName] =  uniformLocation;
+		m_resource->getUniforms()[uniformName] =  uniformLocation;
+
 	}
 
 	void Shader::setUniformBaseLight(std::string uniformName, components::baseLight baseLight) {

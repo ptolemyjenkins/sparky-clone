@@ -19,6 +19,6 @@ namespace sparky { namespace graphics{
 		void bind(unsigned int samplerSlot);
 		int getID();
 	private:
-		static resource::TextureResource * loadTexture(std::string fileName);
+		static resource::TextureResource* loadTexture(std::string fileName);
 	};
 } }

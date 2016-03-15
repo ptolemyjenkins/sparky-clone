@@ -2,7 +2,7 @@
 namespace sparky { namespace architecture {
 	Application::Application()
 	{
-		root = 0;
+	
 	}
 
 	void Application::init()
@@ -12,36 +12,39 @@ namespace sparky { namespace architecture {
 
 	void Application::input(float delta)
 	{
-		(*getRootRenderable3D()).inputAll(delta);
+		root.inputAll(delta);
 	}
 
 	void Application::update(float delta)
 	{
-		(*getRootRenderable3D()).updateAll(delta);
+		root.updateAll(delta);
 	}
 
-	Renderable3D* Application::render()
+	Renderable3D* Application::rootRender()
 	{
-		root->updateTransforms();
-		return root;
+		root.updateTransforms();
+		return &root;
 	}
 
-	void Application::addObject(Renderable3D object)
+	void Application::addObject(Renderable3D* object)
 	{
-		(*getRootRenderable3D()).addChild(object);
+		root.addChild(object);
 	}
 
-	void Application::addComponent(Renderable3DComponent component)
+	void Application::addComponent(Renderable3DComponent &component)
 	{
-		getRootRenderable3D()->addComponent(component);
+		root.addComponent(&component);
 	}
 
-	Renderable3D * Application::getRootRenderable3D()
+	void Application::setEngine(CoreEngine * engine)
 	{
-		if (root == nullptr)
-		{
-			root = &Renderable3D();
-		}
-		return root;
+		this->engine = engine;
+		root.setEngine(engine);
 	}
+
+	CoreEngine * Application::getEngine()
+	{
+		return engine;
+	}
+
 } }

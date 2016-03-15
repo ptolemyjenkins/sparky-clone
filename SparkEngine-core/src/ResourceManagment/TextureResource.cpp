@@ -1,4 +1,5 @@
 #include "TextureResource.h"
+
 namespace sparky { namespace resource {
 	TextureResource::TextureResource()
 	{

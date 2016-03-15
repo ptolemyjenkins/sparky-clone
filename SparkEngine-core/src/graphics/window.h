@@ -2,6 +2,7 @@
 #include <iostream>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include "../maths/maths.h"
 namespace sparky { namespace graphics {
 
 #define MAX_KEYS	1024
@@ -33,6 +34,8 @@ namespace sparky { namespace graphics {
 		bool isMouseButtonDown(unsigned int button) const;
 		bool isMouseButtonPressed(unsigned int button);
 		void getMousePosition(double& x, double& y) const;
+		maths::vec2 getMousePosition();
+		void setMousePosition(double x, double y);
 	private:
 		bool init();
 		friend void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods);

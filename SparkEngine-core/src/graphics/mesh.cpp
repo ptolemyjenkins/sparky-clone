@@ -61,17 +61,26 @@ namespace sparky { namespace graphics {
 
 	void Mesh::addVertices(Vertex vertices[], int vertSize, int indices[], int intSize, bool calcNormal)
 	{
-		if (calcNormal) calcNormals(vertices, vertSize, indices, intSize);
-		calcTangents(vertices, vertSize, indices, intSize);
-		resource = &resource::MeshResource(intSize);
+		//if (calcNormal) calcNormals(vertices, vertSize, indices, intSize);
+		//calcTangents(vertices, vertSize, indices, intSize);
+		resource = new resource::MeshResource(intSize);
 		glBindVertexArray(resource->getVao());
-		glBindBuffer(GL_ARRAY_BUFFER, resource->getVbo());
-		float *verts = toBuffer(vertices, vertSize);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices) * vertSize, verts, GL_STATIC_DRAW);
-		
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getPosVbo());
+		std::vector<float> floatBuffer;
+		for (int i = 0; i < vertSize; i++) { 
+			floatBuffer.push_back(vertices[i].getPos().x);
+			floatBuffer.push_back(vertices[i].getPos().y);
+			floatBuffer.push_back(vertices[i].getPos().z);
+		}	
+		glBufferData(GL_ARRAY_BUFFER, floatBuffer.size() * sizeof(float), &floatBuffer[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource->getIbo());
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices) * intSize, indices, GL_STATIC_DRAW);
-		delete [] verts;
+		std::vector<int> intBuffer;
+		for (int i = 0; i < intSize; i++)
+		{
+			intBuffer.push_back(indices[i]-1);
+		}
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, intBuffer.size() * sizeof(int), &intBuffer[0], GL_STATIC_DRAW);
+		glBindVertexArray(0);
 	}
 
 	void Mesh::calcNormals(Vertex vertices[], int vertSize, int indices[], int intSize)
@@ -98,28 +107,94 @@ namespace sparky { namespace graphics {
 
 	void Mesh::loadMesh(std::string filename)
 	{
+		std::vector<maths::vec3> verts;
+//TODO- fix normals
+		std::vector<int> indices;
+		std::vector<maths::vec3> norms;
+		std::vector<int> nindices;
+
+		std::string pre = "./res/models/";
+		std::ifstream readfile;
+		readfile.open(pre + filename);
+		std::string line;
+		std::string arr[4];
+		std::string arr1[3];
+		std::string arr2[3];
+
+		while (std::getline(readfile, line)) {
+			if (line.at(0) == 'v' && line.at(1) == ' ') {
+				std::stringstream ssin(line);
+				int i = 0;
+				while (ssin.good() && i < 4) {
+					ssin >> arr[i];
+					++i;
+				}
+				verts.push_back(maths::vec3(stof(arr[1]), stof(arr[2]), stof(arr[3])));
+			}
+			else if (line.at(0) == 'v' && line.at(1) == 'n') {
+				std::stringstream ssin(line);
+				int i = 0;
+				while (ssin.good() && i < 4) {
+					ssin >> arr[i];
+					++i;
+				}
+				norms.push_back(maths::vec3(stof(arr[1]), stof(arr[2]), stof(arr[3])));
+			}
+			else if (line.at(0) == 'f' && line.at(1) == ' ') {
+				std::stringstream ssin(line);
+
+				int i = 0;
+				while (ssin.good() && i < 4) {
+					ssin >> arr[i];
+					++i;
+				}
+				for (int i = 1; i < 4; i++) {
+					int a = arr[i].find('/');
+					arr1[i - 1] = arr[i].substr(0, a);
+					int b = arr[i].find_last_of('/');
+					arr2[i - 1] = arr[i].substr(b + 1);
+				}
+				indices.push_back((int)stof(arr1[0]));
+				indices.push_back((int)stof(arr1[1]));
+				indices.push_back((int)stof(arr1[2]));
+
+				nindices.push_back((int)stof(arr2[0]));
+				nindices.push_back((int)stof(arr2[1]));
+				nindices.push_back((int)stof(arr2[2]));
+			}
+		}
+		std::vector<Vertex> vertexs;
+		for (int i = 0; i < verts.size(); i++)
+		{
+			vertexs.push_back(Vertex(verts[i]));
+		}
+		addVertices(&vertexs[0], verts.size(), &indices[0], indices.size(), true);
+
 	}
 
 	void Mesh::draw()
 	{
+		glBindVertexArray(resource->getVao());
 		glEnableVertexAttribArray(0);//position
-		glEnableVertexAttribArray(1);//Tex-coord
-		glEnableVertexAttribArray(2);//normal
-		glEnableVertexAttribArray(3);//tangent
+		//glEnableVertexAttribArray(1);//Tex-coord
+		//glEnableVertexAttribArray(2);//normal
+		//glEnableVertexAttribArray(3);//tangent
 
-		glBindBuffer(GL_ARRAY_BUFFER, resource->getVbo());
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, 0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)12);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)20);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)32);
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getPosVbo());
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)12);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)20);
+		//glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)32);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource->getIbo());
 		glDrawElements(GL_TRIANGLES, resource->getSize(), GL_UNSIGNED_INT, 0);
 
 		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-		glDisableVertexAttribArray(3);
+		//glDisableVertexAttribArray(1);
+		//glDisableVertexAttribArray(2);
+		//glDisableVertexAttribArray(3);
+		glBindVertexArray(0);
+
 	}
 
 	void Mesh::calcTangents(Vertex vertices[], int vertSize, int indices[], int intSize)

@@ -1,20 +1,22 @@
 #include "coreEngine.h"
 
+
 namespace sparky {
-	CoreEngine::CoreEngine(char* title, architecture::Application* app, const int& width, const int& height, const double& frameCap)
+	CoreEngine::CoreEngine(char* title, const int& width, const int& height, const double& frameCap)
 	{
 		this->title = title;
 		this->isRunning = false;
-		this->app = app;
-		app->engine = this;
 		this->width = width;
 		this->height = height;
 		this->frameTimeNano = (long long) (1000000000.0 / frameCap);
 		this->frameTime = 1 / frameCap;
 	}
 
-	void CoreEngine::start(graphics::RenderingEngine* rendering)
+	void CoreEngine::start(graphics::RenderingEngine* rendering, architecture::Application* app)
 	{
+
+		this->app = app;
+		app->setEngine(this);
 		this->renderingEngine = rendering;
 		if (isRunning)
 			return;
@@ -40,33 +42,8 @@ namespace sparky {
 		double accFrames = 0;
 		double unaccounted = 0;
 		app->init();
-//TEMP________________________________________________________________________________________________________________________________________
-		graphics::Shader shader("basic","res/shaders/basic.vert", "res/shaders/basic.frag");
-		shader.bind();
-		GLfloat vertices[] =
-		{
-			-4, -2.31f, 0,
-			0,  4.62f, 0,
-			4, -2.31f, 0
-		};
-		GLuint vbo;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(0);
-
-		maths::mat4 ortho = maths::mat4::orthographic(0.0f, 16.0f, 0.0f, 16.0f, -8.0f, 8.0f);
-		maths::mat4 persp = maths::mat4::perspective(1.22173f, (float)window->getWidth() / (float)window->getHeight(), 0.1f, 1000);
-		shader.setUniformMat4("pr_matrix", ortho);
-		shader.setUniformMat4("vw_matrix", maths::mat4::translation(maths::vec3(8, 8, 0)));
-		maths::quaternion rotation(maths::vec3(0, 0, 1), 0);
-		maths::quaternion rota(maths::vec3(0, 0, 1), 1);
-		maths::quaternion rotb(maths::vec3(1, 1, 0), 2);
-		maths::vec4 colour;
-		float test = 0;
-
-//____________________________________________________________________________________________________________________________________________
+		renderingEngine->initShaders();
+		renderingEngine->setClearColour(maths::vec4(0, 0, 0, 0));
 		long long lastTime = util::Time::getNanoTime();
 		long long startTime;
 		long long passedTime;
@@ -96,8 +73,10 @@ namespace sparky {
 
 				inputTimer.startInvocation();
 				app->input((float)frameTime);
-				if (window->isKeyPressed(GLFW_KEY_L))
+//_________________________________________________________________________
+				if (window->isKeyPressed(GLFW_KEY_L)) //&& window->isKeyPressed(GLFW_KEY_LEFT_SHIFT))
 					stop();
+//_________________________________________________________________________
 				inputTimer.stopInvocation();
 				updateTimer.startInvocation();
 				app->update((float)frameTime);
@@ -125,18 +104,10 @@ namespace sparky {
 
 			if (render) {
 				renderTimer.startInvocation();
-				renderingEngine->render(app->render());
-//TEMP___________________________________________________________________________________________________________________________________________
-				rotation *= (rotb * rota);
-				test += 0.01f;
-				shader.setUniform2f("light_pos", maths::vec2(3 * cos(-test * 4), 3 * sin(-test * 4)));
-				colour.set(pow(cos(test), 2), pow(sin(test + test / 2), 2), pow(sin(test + 2), 2), 1);
-				shader.setUniform4f("col", colour);
-				shader.setUniformMat4("ml_matrix", rotation.toRotationMatrix());
-				glDrawArrays(GL_TRIANGLES, 0, 3);
-//_______________________________________________________________________________________________________________________________________________
+				renderingEngine->render(app->rootRender());
 				renderTimer.stopInvocation();
 				windowTimer.startInvocation();
+				
 				window->update();
 				windowTimer.stopInvocation();
 				frames++;
@@ -160,5 +131,9 @@ namespace sparky {
 	architecture::Application * CoreEngine::getApplication()
 	{
 		return app;
+	}
+	graphics::Window * CoreEngine::getWindow()
+	{
+		return window;
 	}
 }

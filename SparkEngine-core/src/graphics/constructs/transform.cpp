@@ -51,7 +51,8 @@ namespace sparky { namespace graphics {
 
 	void Transform::rotateTrans(const quaternion& rotation)
 	{
-		rot *= rotation;
+		rot = rotation * rot;
+		rot.normalised();
 	}
 
 	void Transform::translateTrans(const vec3 & translation)
@@ -101,12 +102,4 @@ namespace sparky { namespace graphics {
 		}
 		return parentScale * scale;
 	}
-
-	
-
-
-	
-	
-
-
 } }

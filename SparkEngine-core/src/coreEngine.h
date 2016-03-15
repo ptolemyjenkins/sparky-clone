@@ -18,13 +18,13 @@ namespace sparky {
 		double frameTime;
 		long long frameTimeNano;
 	public:
-		CoreEngine(char* title, architecture::Application* app, const int& width = 400, const int& height = 400, const double& frameCap = 60);
-		void start(graphics::RenderingEngine *rendering);
+		CoreEngine(char* title, const int& width = 400, const int& height = 400, const double& frameCap = 60);
+		void start(graphics::RenderingEngine *rendering, architecture::Application* app);
 		void stop();
 		void run();
 		
 		graphics::RenderingEngine* getRenderingEngine();
 		architecture::Application* getApplication();
-
+		graphics::Window* getWindow();
 	};
 }
