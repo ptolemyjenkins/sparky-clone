@@ -5,6 +5,7 @@ layout (location  = 2) in vec3 normal;
 layout (location  = 3) in vec3 tangent;
 
 out vec2 texCoord0;
+out vec3 positions0;
 
 uniform mat4 T_MVP;
 
@@ -13,4 +14,5 @@ void main()
 {
 	gl_Position = T_MVP * vec4(position, 1.0);
 	texCoord0 = texCoord;
+	positions0 = position;
 }

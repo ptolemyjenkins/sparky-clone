@@ -10,7 +10,7 @@ namespace sparky { namespace architecture {
 
 	void Renderable3D::addChild(Renderable3D *child)
 	{
-		children.push_back(*child);
+		children.push_back(child);
 		child->getTransform().setParent(&transform);
 		child->setEngine(engine);
 	}
@@ -27,7 +27,7 @@ namespace sparky { namespace architecture {
 		int a = children.size();
 		for (int i = 0; i < a; i++)
 		{
-			children.at(i).inputAll(delta);
+			children[i]->inputAll(delta);
 		}
 		input(delta);
 	}
@@ -36,7 +36,7 @@ namespace sparky { namespace architecture {
 	{
 		for (int i = 0; i < (int) children.size(); i++)
 		{
-			children.at(i).updateAll(delta);
+			children[i]->updateAll(delta);
 		}
 		update(delta);
 	}
@@ -45,7 +45,7 @@ namespace sparky { namespace architecture {
 	{
 		for (int i = 0; i < (int)children.size(); i++)
 		{
-			children.at(i).renderAll(shader, renderingEngine);
+			children[i]->renderAll(shader, renderingEngine);
 		}
 		render(shader, renderingEngine);
 	}
@@ -59,7 +59,7 @@ namespace sparky { namespace architecture {
 	{
 		for (int i = 0; i < (int)children.size(); i++)
 		{
-			children.at(i).updateTransforms();
+			children[i]->updateTransforms();
 		}
 		transform.update();
 	}
@@ -69,7 +69,7 @@ namespace sparky { namespace architecture {
 		this->engine = engine;
 		for (int i = 0; i < (int)children.size(); i++)
 		{
-			children.at(i).setEngine(engine);
+			children[i]->setEngine(engine);
 		}
 		for (int i = 0; i < (int)components.size(); i++)
 		{
@@ -84,7 +84,7 @@ namespace sparky { namespace architecture {
 
 	Renderable3D * Renderable3D::getChild(int i)
 	{
-		return &children[i];
+		return children[i];
 	}
 
 	Renderable3DComponent * Renderable3D::getComponent(int i)

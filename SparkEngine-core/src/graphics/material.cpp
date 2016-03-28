@@ -33,7 +33,7 @@ namespace sparky { namespace graphics {
 
 	void Material::useDefaultNormal()
 	{
-		addTexture("normalMap", &Texture("default_normal.png"));
+		addTexture("normalMap", new Texture("default_normal.png"));
 	}
 
 	void Material::addTexture(const std::string & name, Texture * texture)
@@ -54,14 +54,5 @@ namespace sparky { namespace graphics {
 		}
 		return resource;
 	}
-
-	Material* Material::DebugMaterial()
-	{
-		this->addTexture("diffuse", &Texture("Debug.png"));
-		this->addFloat("specularIntensity", 1.0f);
-		this->addFloat("specularPower", 0.01f);
-		return this;
-	}
-
 
 } }

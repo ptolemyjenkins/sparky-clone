@@ -123,6 +123,12 @@
     <ClCompile Include="src\architecture\components\freeMove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\meshLoading\indexedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\meshLoading\objModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\window.h">
@@ -255,6 +261,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\architecture\components\freeMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\meshLoading\indexedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\meshLoading\meshLoading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\meshLoading\objModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

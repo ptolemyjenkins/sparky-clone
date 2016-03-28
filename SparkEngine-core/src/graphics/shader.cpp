@@ -161,7 +161,7 @@ namespace sparky { namespace graphics {
 
 			if (uniformType == "sampler2D") {
 				int samplerSlot = renderingEngine.getSamplerSlot(uniformName);
-				material.getTexture(uniformName)->bind(1);
+				material.getTexture(uniformName)->bind(samplerSlot);
 				setUniform1i(uniformName.c_str(), samplerSlot);
 				continue;
 			}

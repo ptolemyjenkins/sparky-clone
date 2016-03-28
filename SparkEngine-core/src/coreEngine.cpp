@@ -43,7 +43,7 @@ namespace sparky {
 		double unaccounted = 0;
 		app->init();
 		renderingEngine->initShaders();
-		renderingEngine->setClearColour(maths::vec4(0, 0, 0, 0));
+		renderingEngine->setClearColour(maths::vec4(0.6, 0.7, 0.8, 0));
 		long long lastTime = util::Time::getNanoTime();
 		long long startTime;
 		long long passedTime;
@@ -74,7 +74,7 @@ namespace sparky {
 				inputTimer.startInvocation();
 				app->input((float)frameTime);
 //_________________________________________________________________________
-				if (window->isKeyPressed(GLFW_KEY_L)) //&& window->isKeyPressed(GLFW_KEY_LEFT_SHIFT))
+				if (window->isKeyDown(GLFW_KEY_ESCAPE) && window->isKeyDown(GLFW_KEY_LEFT_SHIFT))
 					stop();
 //_________________________________________________________________________
 				inputTimer.stopInvocation();

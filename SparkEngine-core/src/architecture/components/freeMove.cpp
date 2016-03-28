@@ -33,7 +33,7 @@ namespace sparky { namespace components{
 			movAmt *= 0.1;
 		}
 
-		if (window->isKeyDown(boostKey)) {
+		if (window->isMouseButtonDown(1)) {
 			movAmt *= 10;
 		}
 

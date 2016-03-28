@@ -7,7 +7,7 @@ namespace sparky { namespace architecture {
 	{
 	private:
 		CoreEngine *engine = 0;
-		std::vector<Renderable3D> children;
+		std::vector<Renderable3D*> children;
 		std::vector<Renderable3DComponent*> components;
 		graphics::Transform transform;
 	public:

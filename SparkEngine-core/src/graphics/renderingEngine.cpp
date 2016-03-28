@@ -4,23 +4,23 @@
 namespace sparky { namespace graphics {
 	RenderingEngine::RenderingEngine()
 	{
-		samplerMap["diffuse"] =  0;
-		samplerMap["normalMap"] = 1;
+		samplerMap["diffuse"] =  1;
+		samplerMap["normalMap"] = 0;
 		samplerMap["dispMap"] =  2;
 
-		addVec3("ambient", maths::vec3(0.2f, 0.3f, 0.1f));
+		addVec3("ambient", maths::vec3(0.5f, 0.7f, 0.8f));
 	}
 
 	void RenderingEngine::initShaders()
 	{
 		//forwardAmbient.init("forward-ambient", "forward-ambient.vert", "forward-ambient.frag");
 		forwardAmbient.init("basic", "basic.vert", "basic.frag");
-		//glFrontFace(GL_CW);
-		//glCullFace(GL_BACK);
-		//glEnable(GL_CULL_FACE);
-		//glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_DEPTH_CLAMP);
-		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		glFrontFace(GL_CW);
+		glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_CLAMP);
+		//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}
 
 	void RenderingEngine::render(architecture::Renderable3D* object) {

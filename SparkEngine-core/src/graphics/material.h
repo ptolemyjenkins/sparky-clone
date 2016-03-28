@@ -15,6 +15,5 @@ namespace sparky { namespace graphics {
 		void useDefaultNormal();
 		void addTexture(const std::string& name, Texture* texture);
 		Texture* getTexture(std::string name);
-		Material* DebugMaterial();
 	};
 } }

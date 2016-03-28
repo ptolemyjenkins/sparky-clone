@@ -1,7 +1,7 @@
 #include "texture.h"
 #include <unordered_map>
-
 #include "../../libs/stb_image.h"
+
 namespace sparky { namespace graphics {
 	std::unordered_map<std::string, resource::TextureResource> Texture::loadedTextures;
 	
