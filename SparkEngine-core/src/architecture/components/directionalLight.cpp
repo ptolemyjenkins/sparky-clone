@@ -8,7 +8,7 @@ namespace sparky { namespace components {
 
 	directionalLight::directionalLight(maths::vec4 colour, float intensity) : baseLight(colour, intensity)
 	{
-		setShader(graphics::Shader("forward_directional","forward-directional.vert", "forward-directional.frag"));
+		setShader(new graphics::Shader("forward_directional", "forward-directional.vs", "forward-directional.fs"));
 	}
 
 	maths::vec3 directionalLight::getDirection()

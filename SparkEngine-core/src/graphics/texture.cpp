@@ -13,6 +13,7 @@ namespace sparky { namespace graphics {
 
 	Texture::Texture(std::string fileName)
 	{
+
 		this->fileName = fileName;
 		std::unordered_map<std::string, resource::TextureResource>::const_iterator result = Texture::loadedTextures.find(fileName);
 		if (result != Texture::loadedTextures.end()) {
@@ -70,6 +71,9 @@ namespace sparky { namespace graphics {
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+			GLenum error = glGetError();
+			if (error != GL_NO_ERROR)
+				std::cout << "OpenGL Error: " << error << std::endl;
 			glBindTexture(GL_TEXTURE_2D, 0);
 			stbi_image_free(imageData);
 		}catch (std::exception& e) {

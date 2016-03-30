@@ -4,17 +4,17 @@
 namespace sparky { namespace graphics {
 	RenderingEngine::RenderingEngine()
 	{
-		samplerMap["diffuse"] =  1;
-		samplerMap["normalMap"] = 0;
+		samplerMap["diffuse"] =  0;
+		samplerMap["normalMap"] = 1;
 		samplerMap["dispMap"] =  2;
 
-		addVec3("ambient", maths::vec3(0.5f, 0.7f, 0.8f));
+		addVec3("ambient", maths::vec3(0.1f, 0.1f, 0.1f));
 	}
 
 	void RenderingEngine::initShaders()
 	{
-		//forwardAmbient.init("forward-ambient", "forward-ambient.vert", "forward-ambient.frag");
-		forwardAmbient.init("basic", "basic.vert", "basic.frag");
+		forwardAmbient.init("forward-ambient", "forward-ambient.vs", "forward-ambient.fs");
+		//forwardAmbient.init("basic", "basic.vert", "basic.frag");
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -27,7 +27,7 @@ namespace sparky { namespace graphics {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		object->renderAll(forwardAmbient, *this);
 
-		/*glEnable(GL_BLEND);
+		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(false);
 		glDepthFunc(GL_EQUAL);
@@ -39,7 +39,7 @@ namespace sparky { namespace graphics {
 
 		glDepthFunc(GL_LESS);
 		glDepthMask(true);
-		glDisable(GL_BLEND);*/
+		glDisable(GL_BLEND);
 	}
 
 	void RenderingEngine::setClearColour(maths::vec4 colour)

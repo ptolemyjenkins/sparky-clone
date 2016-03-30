@@ -48,6 +48,10 @@ namespace sparky { namespace graphics {
 	
 	void Window::update()
 	{
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR)
+			std::cout << "OpenGL Error: " << error << std::endl;
+
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
@@ -62,7 +66,14 @@ namespace sparky { namespace graphics {
 		glfwTerminate();
 	}
 
-//input handling
+	void Window::error()
+	{
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR)
+			std::cout << "OpenGL Error: " << error << std::endl;
+	}
+
+	//input handling
 	bool Window::isKeyDown(unsigned int keycode) const
 	{
 		// TODO: Log this...

@@ -129,6 +129,9 @@
     <ClCompile Include="src\util\meshLoading\objModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\meshLoading\basicMeshs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\window.h">
@@ -272,7 +275,7 @@
     <ClInclude Include="src\util\meshLoading\objModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\buffer.h">
+    <ClInclude Include="src\util\meshLoading\basicMeshs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

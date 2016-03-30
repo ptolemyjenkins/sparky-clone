@@ -16,6 +16,7 @@ namespace sparky {  namespace components {
 
 	void MeshRenderer::render(graphics::Shader &shader, graphics::RenderingEngine &renderingEngine)
 	{
+
 		shader.bind();
 		shader.updateUniforms(getTransform(), *material, renderingEngine);
 		mesh->draw();

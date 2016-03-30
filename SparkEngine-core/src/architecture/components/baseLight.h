@@ -20,9 +20,9 @@ namespace sparky {
 		float getIntensity();
 
 		void setColour(maths::vec4 colour);
-		maths::vec4 getColour();
+		maths::vec3 getColour();
 
-		void setShader(graphics::Shader &shader);
+		void setShader(graphics::Shader* shader);
 		graphics::Shader* getShader();
 
 	};

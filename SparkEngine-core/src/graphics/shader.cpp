@@ -4,6 +4,7 @@
 #include "../architecture/components/pointLight.h"
 #include "../architecture/components/directionalLight.h"
 #include "../util/logging.h"
+#include "window.h"
 
 namespace sparky { namespace graphics {
 	std::vector<std::string> Shader::loadedShaderMap;
@@ -23,15 +24,15 @@ namespace sparky { namespace graphics {
 			m_resource->init();
 			loadedShaderMap.push_back(fileName);
 			loadedShaders.push_back(m_resource);
-			std::string pre = "./res/shaders/";
-			std::string vertShaderString = util::FileUtils::read_file((pre + m_VertPath).c_str());
-			std::string fragShaderString = util::FileUtils::read_file((pre + m_FragPath).c_str());
+			std::string vertShaderString = importShader(m_VertPath);
+			std::string fragShaderString = importShader(m_FragPath);
 			if (addVertexShader(vertShaderString) && addFragmentShader(fragShaderString)) {
 				compileShader();
 			}
 			else {
 				util::Logging::Log("Error: failed shader build",1);
 			}
+
 			addAllUniforms(vertShaderString,fileName);
 			addAllUniforms(fragShaderString,fileName);
 		}
@@ -66,9 +67,8 @@ namespace sparky { namespace graphics {
 			m_resource->init();
 			loadedShaderMap.push_back(fileName);
 			loadedShaders.push_back(m_resource);
-			std::string pre = "./res/shaders/";
-			std::string vertShaderString = util::FileUtils::read_file((pre + m_VertPath).c_str());
-			std::string fragShaderString = util::FileUtils::read_file((pre + m_FragPath).c_str());
+			std::string vertShaderString = importShader(m_VertPath);
+			std::string fragShaderString = importShader(m_FragPath);
 			if (addVertexShader(vertShaderString) && addFragmentShader(fragShaderString)) {
 				compileShader();
 			}
@@ -93,6 +93,23 @@ namespace sparky { namespace graphics {
 	GLint Shader::getUniformLocation(const GLchar * name)
 	{
 		return glGetUniformLocation(m_resource->getProgram(), name);
+	}
+
+	std::string Shader::importShader(const char * path)
+	{
+		const std::string INCLUDE_DIRECTIVE = "#include";
+		std::string pre = "./res/shaders/";
+		std::string string = util::FileUtils::read_file((pre + path).c_str());
+		int i = string.find(INCLUDE_DIRECTIVE);
+		while (i != -1) {
+			int end = util::FileUtils::find(string, '"', i+ INCLUDE_DIRECTIVE.size() + 2) - i;
+			std::string title = util::FileUtils::trim(string.substr(i + INCLUDE_DIRECTIVE.size() + 2, end - INCLUDE_DIRECTIVE.size() - 2));
+			string.erase(i, end + 1);
+			std::string content = importShader(title.c_str());
+			string.insert(i, content);
+			i = util::FileUtils::find(string, INCLUDE_DIRECTIVE, i + content.size());
+		}
+		return string;
 	}
 
 	bool Shader::addVertexShader(std::string shaderString)
@@ -189,7 +206,8 @@ namespace sparky { namespace graphics {
 					continue;
 				}
 				else if (uniformType == "DirectionalLight") {
-					setUniformDirectionalLight(uniformName, *static_cast<components::directionalLight*>(renderingEngine.getActiveLight()));
+					components::directionalLight* a = static_cast<components::directionalLight*>(renderingEngine.getActiveLight());
+					setUniformDirectionalLight(uniformName, *a);
 					continue;
 				}
 				else if (uniformType == "PointLight") {
@@ -220,6 +238,7 @@ namespace sparky { namespace graphics {
 					continue;
 				}
 				else if (uniformType == "float") {
+					float a = material.getFloat(uniformName);
 					setUniform1f(uniformName.c_str(), material.getFloat(uniformName));
 					continue;
 				}
@@ -245,10 +264,8 @@ namespace sparky { namespace graphics {
 			int whiteSpacePos = util::FileUtils::find(uniformLine, " ", 0);
 			std::string uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, uniformLine.length()- whiteSpacePos - 1));
 			std::string uniformType = util::FileUtils::trim(uniformLine.substr(0, whiteSpacePos));
-			if (fileName != "GUI") {
-				m_resource->getUniformNames().push_back(uniformName);
-				m_resource->getUniformTypes().push_back(uniformType);
-			}
+			m_resource->getUniformNames().push_back(uniformName);
+			m_resource->getUniformTypes().push_back(uniformType);
 			addUniform(uniformName, uniformType, structs);
 			uniformStartLocation = util::FileUtils::find(shaderText, UNIFORM_KEYWORD, uniformStartLocation + UNIFORM_KEYWORD.length());
 		}
@@ -259,7 +276,7 @@ namespace sparky { namespace graphics {
 		std::string STRUCT_KEYWORD = "struct";
 		int structStartLocation = shaderText.find(STRUCT_KEYWORD);
 		while (structStartLocation != -1) {
-			if (!(structStartLocation != 0 && (shaderText[structStartLocation - 1] == ' ' || shaderText[structStartLocation - 1] == ';') && shaderText[structStartLocation + STRUCT_KEYWORD.length()] == ' ')) {
+			if (!(structStartLocation != 0 && (shaderText[structStartLocation - 1] == ' ' || shaderText[structStartLocation - 1] == ';' || shaderText[structStartLocation - 1] == '\n') && shaderText[structStartLocation + STRUCT_KEYWORD.length()] == ' ')) {
 				structStartLocation = util::FileUtils::find(shaderText , STRUCT_KEYWORD, structStartLocation + STRUCT_KEYWORD.length());
 				continue;
 			}
@@ -272,12 +289,12 @@ namespace sparky { namespace graphics {
 			int componentSemicolonPos = util::FileUtils::find(shaderText, ";", braceStart);
 			while (componentSemicolonPos != -1 && componentSemicolonPos < braceEnd) {
 				int componentNameStart = componentSemicolonPos;
-				while (shaderText[componentNameStart - 1] != ' ') {
+				while (shaderText[componentNameStart - 1] != ' ' && shaderText[componentNameStart - 1] != '\n' && shaderText[componentNameStart - 1] != '\t') {
 					componentNameStart--;
 				}
 				int componentTypeEnd = componentNameStart - 1;
 				int componentTypeStart = componentTypeEnd;
-				while (shaderText[componentTypeStart - 1] != ' ') {
+				while (shaderText[componentTypeStart - 1] != ' ' && shaderText[componentTypeStart - 1] != '\n' && shaderText[componentTypeStart - 1] != '\t') {
 					componentTypeStart--;
 				}
 				std::string componentName = shaderText.substr(componentNameStart, componentSemicolonPos- componentNameStart);
@@ -319,12 +336,12 @@ namespace sparky { namespace graphics {
 	}
 
 	void Shader::setUniformBaseLight(std::string uniformName, components::baseLight baseLight) {
-		setUniform4f((uniformName + ".colour").c_str(), baseLight.getColour());
+		setUniform3f((uniformName + ".colour").c_str(), baseLight.getColour());
 		setUniform1f((uniformName + ".intensity").c_str(), baseLight.getIntensity());
 	}
 
 	void Shader::setUniformDirectionalLight(std::string uniformName, components::directionalLight directionalLight) {
-		setUniformBaseLight((uniformName + ".base").c_str(), directionalLight);
+		setUniformBaseLight((uniformName + ".base").c_str(), directionalLight);	
 		setUniform3f((uniformName + ".direction").c_str(), directionalLight.getDirection());
 
 	}

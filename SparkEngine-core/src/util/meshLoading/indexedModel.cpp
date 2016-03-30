@@ -8,6 +8,10 @@ namespace sparky { namespace util {
 	void IndexedModel::calcNormals()
 	{
 		normals.clear();
+		for (int i = 0; i < positions.size(); i++)
+		{
+			normals.push_back(maths::vec3(0, 0, 0));
+		}
 		for (int i = 0; i < indices.size(); i += 3) {
 			int i0 = indices[i];
 			int i1 = indices[i + 1];

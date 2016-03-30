@@ -17,12 +17,12 @@ namespace sparky { namespace architecture {
 
 	void Application::update(float delta)
 	{
+		root.updateTransforms();
 		root.updateAll(delta);
 	}
 
 	Renderable3D* Application::rootRender()
 	{
-		root.updateTransforms();
 		return &root;
 	}
 

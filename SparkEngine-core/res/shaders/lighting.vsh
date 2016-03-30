@@ -21,6 +21,6 @@ void main(){
     t = normalize(t - dot(t, n) * n);
     
     vec3 biTangent = -cross(t, n);
-    tbnMatrix = mat3(t, biTangent, n);
+	tbnMatrix = mat3(t, biTangent, n);
     tbnMatrix1 = mat3(t, -biTangent, n);
 }

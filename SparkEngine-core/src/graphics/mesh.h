@@ -18,6 +18,7 @@ namespace sparky { namespace graphics {
 		void uploadModel(util::IndexedModel* model);
 		void loadMesh(std::string filename);
 	public:
+		void init(util::IndexedModel* model);
 		void draw();
 	};
 } }

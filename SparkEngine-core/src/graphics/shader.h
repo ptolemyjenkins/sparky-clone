@@ -65,6 +65,7 @@ namespace sparky {
 		bool addVertexShader(std::string shaderString);
 		bool addFragmentShader(std::string shaderString);
 		void compileShader();
+		std::string importShader(const char* path);
 
 		void addAllUniforms(std::string shaderText, std::string fileName);
 		std::unordered_map<std::string, std::vector<GLSLVar>> findUniformStructs(std::string shaderText);

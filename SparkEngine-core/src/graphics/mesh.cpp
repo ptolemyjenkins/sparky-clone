@@ -2,7 +2,8 @@
 namespace sparky { namespace graphics {
 	std::unordered_map<std::string, resource::MeshResource> Mesh::loadedModels;
 
-	Mesh::Mesh(){
+	Mesh::Mesh()
+	{
 	}
 
 	Mesh::Mesh(const std::string& fileName)
@@ -27,6 +28,11 @@ namespace sparky { namespace graphics {
 		}
 	}
 
+	void Mesh::init(util::IndexedModel* model){
+		this->fileName = "";
+		uploadModel(model);
+	}
+
 	void Mesh::uploadModel(util::IndexedModel* model)
 	{
 		resource = new resource::MeshResource(model->indices.size());
@@ -49,6 +55,25 @@ namespace sparky { namespace graphics {
 		}
 		glBufferData(GL_ARRAY_BUFFER, floatBuffer.size() * sizeof(float), &floatBuffer[0], GL_STATIC_DRAW);
 
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getNorVbo());
+		floatBuffer.clear();
+		for (int i = 0; i < model->normals.size(); i++) {
+			floatBuffer.push_back(model->normals[i].x);
+			floatBuffer.push_back(model->normals[i].y);
+			floatBuffer.push_back(model->normals[i].z);
+		}
+		glBufferData(GL_ARRAY_BUFFER, floatBuffer.size() * sizeof(float), &floatBuffer[0], GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getTanVbo());
+		floatBuffer.clear();
+		for (int i = 0; i < model->tangents.size(); i++) {
+			floatBuffer.push_back(model->tangents[i].x);
+			floatBuffer.push_back(model->tangents[i].y);
+			floatBuffer.push_back(model->tangents[i].z);
+
+		}
+		glBufferData(GL_ARRAY_BUFFER, floatBuffer.size() * sizeof(float), &floatBuffer[0], GL_STATIC_DRAW);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource->getIbo());
 		std::vector<int> intBuffer;
 		for (int i = 0; i < model->indices.size(); i++)
@@ -56,6 +81,8 @@ namespace sparky { namespace graphics {
 			intBuffer.push_back(model->indices[i]);
 		}
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, intBuffer.size() * sizeof(int), &intBuffer[0], GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
 
@@ -66,7 +93,6 @@ namespace sparky { namespace graphics {
 		util::IndexedModel model;
 		obj.toIndexedModel(&model);
 		uploadModel(&model);
-
 	}
 
 	void Mesh::draw()
@@ -74,8 +100,8 @@ namespace sparky { namespace graphics {
 		glBindVertexArray(resource->getVao());
 		glEnableVertexAttribArray(0);//position
 		glEnableVertexAttribArray(1);//Tex-coord
-		//glEnableVertexAttribArray(2);//normal
-		//glEnableVertexAttribArray(3);//tangent
+		glEnableVertexAttribArray(2);//normal
+		glEnableVertexAttribArray(3);//tangent
 
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getPosVbo());
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -83,16 +109,21 @@ namespace sparky { namespace graphics {
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getTexVbo());
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		
-		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)20);
-		//glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, Vertex::SIZE * 4, (void*)32);
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getNorVbo());
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, resource->getTanVbo());
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource->getIbo());
 		glDrawElements(GL_TRIANGLES, resource->getSize(), GL_UNSIGNED_INT, 0);
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
-		//glDisableVertexAttribArray(2);
-		//glDisableVertexAttribArray(3);
+		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
 	}

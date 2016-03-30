@@ -16,8 +16,9 @@ namespace sparky { namespace components {
 
 	void baseLight::addToEngine(CoreEngine* engine)
 	{
-		//Engine.getRenderingEngine().addLight(this);
-
+		if (engine != 0) {
+			engine->getRenderingEngine()->addLight(this);
+		}
 	}
 
 	void baseLight::setIntensity(float intensity)
@@ -35,14 +36,14 @@ namespace sparky { namespace components {
 		this->colour = colour;
 	}
 
-	maths::vec4 baseLight::getColour()
+	maths::vec3 baseLight::getColour()
 	{
-		return maths::vec4();
+		return maths::vec3(colour.x,colour.y,colour.z);
 	}
 
-	void baseLight::setShader(graphics::Shader &shader)
+	void baseLight::setShader(graphics::Shader* shader)
 	{
-		this->shader = &shader;
+		this->shader = shader;
 	}
 
 	graphics::Shader* baseLight::getShader()

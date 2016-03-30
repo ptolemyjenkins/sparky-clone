@@ -182,6 +182,7 @@
     <ClCompile Include="src\ResourceManagment\MeshResource.cpp" />
     <ClCompile Include="src\ResourceManagment\ShaderResource.cpp" />
     <ClCompile Include="src\ResourceManagment\TextureResource.cpp" />
+    <ClCompile Include="src\util\meshLoading\basicMeshs.cpp" />
     <ClCompile Include="src\util\meshLoading\indexedModel.cpp" />
     <ClCompile Include="src\util\meshLoading\objModel.cpp" />
   </ItemGroup>
@@ -201,7 +202,6 @@
     <ClInclude Include="src\architecture\renderable3DComponent.h" />
     <ClInclude Include="src\core.h" />
     <ClInclude Include="src\coreEngine.h" />
-    <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\constructs\Attenuation.h" />
     <ClInclude Include="src\graphics\constructs\vertex.h" />
     <ClInclude Include="src\graphics\material.h" />
@@ -218,6 +218,7 @@
     <ClInclude Include="src\ResourceManagment\ShaderResource.h" />
     <ClInclude Include="src\ResourceManagment\TextureResource.h" />
     <ClInclude Include="src\util\logging.h" />
+    <ClInclude Include="src\util\meshLoading\basicMeshs.h" />
     <ClInclude Include="src\util\meshLoading\indexedModel.h" />
     <ClInclude Include="src\util\meshLoading\meshLoading.h" />
     <ClInclude Include="src\util\meshLoading\objModel.h" />

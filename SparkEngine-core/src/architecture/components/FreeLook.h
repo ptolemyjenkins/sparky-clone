@@ -4,7 +4,7 @@
 namespace sparky { namespace components {
 	class freeLook : public architecture::Renderable3DComponent {
 	private:
-		const maths::vec3 const yAxis = maths::vec3(0, 1, 0);
+		maths::vec3 const yAxis = maths::vec3(0, 1, 0);
 		bool mouseLocked;
 		float sensitivity;
 		int unlockMouseKey;

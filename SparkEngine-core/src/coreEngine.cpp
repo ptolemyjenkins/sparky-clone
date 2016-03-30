@@ -43,7 +43,7 @@ namespace sparky {
 		double unaccounted = 0;
 		app->init();
 		renderingEngine->initShaders();
-		renderingEngine->setClearColour(maths::vec4(0.6, 0.7, 0.8, 0));
+		renderingEngine->setClearColour(maths::vec4(0.05, 0.1, 0.2, 0));
 		long long lastTime = util::Time::getNanoTime();
 		long long startTime;
 		long long passedTime;

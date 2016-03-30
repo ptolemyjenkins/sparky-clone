@@ -4,7 +4,7 @@ namespace sparky { namespace graphics {
 	Material::Material()
 	{
 		addTexture("diffuse", new Texture("Debug.png"));
-		addTexture("normalMap", new Texture("default_normal.png"));
+		addTexture("normalMap", new Texture("default_normal.jpg"));
 		addTexture("dispMap",  new Texture("default_disp.png"));
 		addFloat("specularIntensity", 1.0f);
 		addFloat("specularPower", 0.01f);

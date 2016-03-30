@@ -29,6 +29,8 @@ namespace sparky { namespace graphics {
 		inline int getWidth() const { return m_Width; }
 		inline int getHeight() const { return m_Height; }
 
+		static void error();
+
 		bool isKeyDown(unsigned int keycode) const;
 		bool isKeyPressed(unsigned int keycode);
 		bool isMouseButtonDown(unsigned int button) const;
