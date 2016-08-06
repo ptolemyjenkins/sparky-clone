@@ -10,41 +10,21 @@ namespace sparky { namespace architecture {
 		
 	}
 
-	void Application::input(float delta)
+	void Application::input(float delta, graphics::Window* window)
 	{
-		root.inputAll(delta);
+		scene.input(delta, window);
 	}
 
 	void Application::update(float delta)
 	{
-		root.updateTransforms();
-		root.updateAll(delta);
+		scene.updateTransforms();
+		scene.update(delta);
 	}
 
-	Renderable3D* Application::rootRender()
+	void Application::setRenderingEngine(graphics::RenderingEngine * renderingEngine)
 	{
-		return &root;
-	}
-
-	void Application::addObject(Renderable3D* object)
-	{
-		root.addChild(object);
-	}
-
-	void Application::addComponent(Renderable3DComponent &component)
-	{
-		root.addComponent(&component);
-	}
-
-	void Application::setEngine(CoreEngine * engine)
-	{
-		this->engine = engine;
-		root.setEngine(engine);
-	}
-
-	CoreEngine * Application::getEngine()
-	{
-		return engine;
+		this->renderingEngine = renderingEngine;
+		renderingEngine->setScene(&scene);
 	}
 
 } }

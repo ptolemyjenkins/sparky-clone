@@ -40,7 +40,7 @@ namespace sparky { namespace graphics {
 
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getPosVbo());
 		std::vector<float> floatBuffer;
-		for (int i = 0; i < model->positions.size(); i++) { 
+		for (unsigned int i = 0; i < model->positions.size(); i++) { 
 			floatBuffer.push_back(model->positions[i].x);
 			floatBuffer.push_back(model->positions[i].y);
 			floatBuffer.push_back(model->positions[i].z);
@@ -49,7 +49,7 @@ namespace sparky { namespace graphics {
 
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getTexVbo());
 		floatBuffer.clear();
-		for (int i = 0; i < model->texCoords.size(); i++) {
+		for (unsigned int i = 0; i < model->texCoords.size(); i++) {
 			floatBuffer.push_back(model->texCoords[i].x);
 			floatBuffer.push_back(model->texCoords[i].y);
 		}
@@ -57,7 +57,7 @@ namespace sparky { namespace graphics {
 
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getNorVbo());
 		floatBuffer.clear();
-		for (int i = 0; i < model->normals.size(); i++) {
+		for (unsigned int i = 0; i < model->normals.size(); i++) {
 			floatBuffer.push_back(model->normals[i].x);
 			floatBuffer.push_back(model->normals[i].y);
 			floatBuffer.push_back(model->normals[i].z);
@@ -66,7 +66,7 @@ namespace sparky { namespace graphics {
 
 		glBindBuffer(GL_ARRAY_BUFFER, resource->getTanVbo());
 		floatBuffer.clear();
-		for (int i = 0; i < model->tangents.size(); i++) {
+		for (unsigned int i = 0; i < model->tangents.size(); i++) {
 			floatBuffer.push_back(model->tangents[i].x);
 			floatBuffer.push_back(model->tangents[i].y);
 			floatBuffer.push_back(model->tangents[i].z);
@@ -76,7 +76,7 @@ namespace sparky { namespace graphics {
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource->getIbo());
 		std::vector<int> intBuffer;
-		for (int i = 0; i < model->indices.size(); i++)
+		for (unsigned int i = 0; i < model->indices.size(); i++)
 		{
 			intBuffer.push_back(model->indices[i]);
 		}

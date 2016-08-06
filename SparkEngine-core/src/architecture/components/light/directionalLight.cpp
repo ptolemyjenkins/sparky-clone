@@ -13,7 +13,7 @@ namespace sparky { namespace components {
 
 	maths::vec3 directionalLight::getDirection()
 	{
-		return getTransform().getTransformedRot().getForward();
+		return getTransform()->getTransformedRot().getForward();
 	}
 
 

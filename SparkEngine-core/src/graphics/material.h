@@ -1,7 +1,6 @@
 #pragma once
 #include "../ResourceManagment/Mapping.h"
 #include "texture.h"
-#include <unordered_map>
 
 namespace sparky { namespace graphics {
 	class Material : public resource::Mapping {

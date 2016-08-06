@@ -1,6 +1,6 @@
 #pragma once
 #include <unordered_map>
-#include "../maths/vec3.h"
+#include "../maths/maths.h"
 
 namespace sparky { namespace resource {
 	class Mapping {

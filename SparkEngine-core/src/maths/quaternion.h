@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include "maths_func.h"
-#include "vec3.h"
 #include "mat4.h"
 namespace sparky { namespace maths {
 	struct quaternion

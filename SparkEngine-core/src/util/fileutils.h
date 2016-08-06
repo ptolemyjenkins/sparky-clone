@@ -14,7 +14,7 @@ namespace sparky { namespace util {
 			FILE* file = fopen(filepath, "rt");
 			if (file == NULL) {
 				std::string i = filepath;
-				Logging::Log("File not found error: " + i,1);
+				Logging::log_exit("File not found error: " + i,1);
 			}
 			fseek(file, 0, SEEK_END);
 			unsigned long length = ftell(file);

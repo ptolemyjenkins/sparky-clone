@@ -1,6 +1,5 @@
 #pragma once
-#include "../../maths/vec3.h"
-#include "../../maths/vec2.h"
+#include "../../maths/maths.h"
 
 namespace sparky { namespace graphics {
 	class Vertex {

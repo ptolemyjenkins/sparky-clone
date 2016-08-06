@@ -1,8 +1,6 @@
 #pragma once
 #include "../src/architecture/application.h"
-#include "../src/architecture/components/components.h"
-#include "../src/graphics/material.h"
-#include "../src/graphics/mesh.h"
+#include "../src/architecture/Layer3D.h"
 #include "../src/util/meshLoading/basicMeshs.h"
 
 namespace sparky {

@@ -16,14 +16,15 @@ namespace sparky {	namespace graphics {
 		vec3 pos;
 		quaternion rot;
 		vec3 scale;
+		
+	private:
+		mat4& getParentMatrix();
 	public:
 		Transform();
 		void update();
 		bool hasChanged();
 		void setParent(Transform *newParent);
-	private:
-		mat4& getParentMatrix();
-	public:
+
 
 		mat4 getTransformation();
 		void rotateTrans(const quaternion& rotation);

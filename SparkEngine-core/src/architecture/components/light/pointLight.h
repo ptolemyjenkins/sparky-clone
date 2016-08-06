@@ -1,6 +1,6 @@
 #pragma once
 #include "baseLight.h"
-#include "../../graphics/constructs/Attenuation.h"
+#include "../../../graphics/constructs/Attenuation.h"
 
 namespace sparky { namespace components {
 		class pointLight : public baseLight {

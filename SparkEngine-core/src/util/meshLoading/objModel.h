@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-#include "../../maths/maths.h"
 #include "indexedModel.h"
 #include <fstream>
 #include <sstream>

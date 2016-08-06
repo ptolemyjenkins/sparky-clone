@@ -1,13 +1,9 @@
 #pragma once
-#include <GL\glew.h>
-#include <vector>
-#include <iostream>
 #include "../ResourceManagment/ShaderResource.h"
 #include "../util/fileutils.h"
 
 #include "../graphics/constructs/transform.h"
 #include "material.h"
-#include <algorithm>
 
 
 
@@ -46,8 +42,6 @@ namespace sparky {
 		Shader( char * fileName, const char* vertexPath, const char* fragPath);
 		~Shader();
 
-		void init(char * fileName, const char* vertexPath, const char* fragPath);
-
 		void setUniformMat4(const GLchar* name, const maths::mat4& matrix);
 		void setUniform1f(const GLchar* name, float value);
 		void setUniform1i(const GLchar* name, int value);
@@ -58,7 +52,7 @@ namespace sparky {
 		void bind();
 		void disable() const;
 
-		void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine);
+		void updateUniforms(Transform* transform, Material* material, RenderingEngine* renderingEngine, components::camera* camera, components::baseLight* light);
 	private:
 		GLint getUniformLocation(const GLchar* name);
 		GLuint load();

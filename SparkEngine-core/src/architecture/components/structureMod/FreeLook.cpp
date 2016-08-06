@@ -1,6 +1,5 @@
 #include "FreeLook.h"
-#include "../Renderable3D.h"
-#include "../../coreEngine.h"
+#include "../../../coreEngine.h"
 namespace sparky { namespace components {
 	
 	freeLook::freeLook(float sensitivity) : freeLook(sensitivity, GLFW_KEY_ESCAPE)
@@ -14,9 +13,8 @@ namespace sparky { namespace components {
 		this->unlockMouseKey = unlockMouseKey;
 	}
 
-	void freeLook::input(float delta)
+	void freeLook::input(float delta, graphics::Window* window)
 	{
-		graphics::Window* window = parent->getEngine()->getWindow();
 		centrePosition = maths::vec2(window->getWidth() / 2.0, window->getHeight() / 2.0);
 		if (window->isKeyPressed(unlockMouseKey)) {
 			mouseLocked = false;
@@ -25,10 +23,10 @@ namespace sparky { namespace components {
 
 
 		float keyRot = 100 * sensitivity*delta;
-		if (window->isKeyDown(GLFW_KEY_RIGHT)) getTransform().rotateTrans(maths::quaternion(yAxis, keyRot));
-		if (window->isKeyDown(GLFW_KEY_LEFT)) getTransform().rotateTrans(maths::quaternion(yAxis, -keyRot));
-		if (window->isKeyDown(GLFW_KEY_UP)) getTransform().rotateTrans(maths::quaternion(getTransform().rot.getRight(), -keyRot));
-		if (window->isKeyDown(GLFW_KEY_DOWN)) getTransform().rotateTrans(maths::quaternion(getTransform().rot.getRight(), keyRot));
+		if (window->isKeyDown(GLFW_KEY_RIGHT)) getTransform()->rotateTrans(maths::quaternion(yAxis, keyRot));
+		if (window->isKeyDown(GLFW_KEY_LEFT)) getTransform()->rotateTrans(maths::quaternion(yAxis, -keyRot));
+		if (window->isKeyDown(GLFW_KEY_UP)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), -keyRot));
+		if (window->isKeyDown(GLFW_KEY_DOWN)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), keyRot));
 
 
 		if (mouseLocked) {
@@ -37,8 +35,8 @@ namespace sparky { namespace components {
 			bool rotY = deltaPos.x != 0;
 			bool rotX = deltaPos.y != 0;
 
-			if (rotY) getTransform().rotateTrans(maths::quaternion(yAxis, deltaPos.x * sensitivity));
-			if (rotX) getTransform().rotateTrans(maths::quaternion(getTransform().rot.getRight(), -deltaPos.y * sensitivity));
+			if (rotY) getTransform()->rotateTrans(maths::quaternion(yAxis, deltaPos.x * sensitivity));
+			if (rotX) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), -deltaPos.y * sensitivity));
 
 			if (rotY || rotX) {
 				window->setMousePosition(centrePosition.x,centrePosition.y);

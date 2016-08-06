@@ -8,11 +8,11 @@ namespace sparky { namespace util {
 	void IndexedModel::calcNormals()
 	{
 		normals.clear();
-		for (int i = 0; i < positions.size(); i++)
+		for (unsigned int i = 0; i < positions.size(); i++)
 		{
 			normals.push_back(maths::vec3(0, 0, 0));
 		}
-		for (int i = 0; i < indices.size(); i += 3) {
+		for (unsigned int i = 0; i < indices.size(); i += 3) {
 			int i0 = indices[i];
 			int i1 = indices[i + 1];
 			int i2 = indices[i + 2];
@@ -26,7 +26,7 @@ namespace sparky { namespace util {
 			normals[i1] += normal;
 			normals[i2] += normal;
 		}
-		for (int i = 0; i < normals.size(); i++) {
+		for (unsigned int i = 0; i < normals.size(); i++) {
 			normals[i].normalised();
 		}
 	}
@@ -34,11 +34,11 @@ namespace sparky { namespace util {
 	void IndexedModel::calcTangents()
 	{
 		tangents.clear();
-		for (int i = 0; i < positions.size(); i++)
+		for (unsigned int i = 0; i < positions.size(); i++)
 		{
 			tangents.push_back(maths::vec3(0, 0, 0));
 		}
-		for (int i = 0; i < indices.size(); i += 3) {
+		for (unsigned int i = 0; i < indices.size(); i += 3) {
 			int i0 = indices[i];
 			int i1 = indices[i + 1];
 			int i2 = indices[i + 2];
@@ -62,7 +62,7 @@ namespace sparky { namespace util {
 			tangents[i1] += tangent;
 			tangents[i2] += tangent;
 		}
-		for (int i = 0; i < tangents.size(); i++) {
+		for (unsigned int i = 0; i < tangents.size(); i++) {
 			tangents[i].normalised();
 		}
 	}

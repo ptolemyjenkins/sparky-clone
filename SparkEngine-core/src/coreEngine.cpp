@@ -12,14 +12,16 @@ namespace sparky {
 		this->frameTime = 1 / frameCap;
 	}
 
-	void CoreEngine::start(graphics::RenderingEngine* rendering, architecture::Application* app)
+	void CoreEngine::start(architecture::Application* app)
 	{
 
 		this->app = app;
-		app->setEngine(this);
-		this->renderingEngine = rendering;
-		if (isRunning)
+		if (isRunning) {
+			app->setRenderingEngine(renderingEngine);
 			return;
+		}
+		this->renderingEngine = new graphics::RenderingEngine();
+		app->setRenderingEngine(renderingEngine);
 		this->window = &graphics::Window(title, width, height);
 		window->build();
 		run();
@@ -43,7 +45,6 @@ namespace sparky {
 		double unaccounted = 0;
 		app->init();
 		renderingEngine->initShaders();
-		renderingEngine->setClearColour(maths::vec4(0.05, 0.1, 0.2, 0));
 		long long lastTime = util::Time::getNanoTime();
 		long long startTime;
 		long long passedTime;
@@ -72,12 +73,13 @@ namespace sparky {
 				unprocessedTime -= frameTimeNano;
 
 				inputTimer.startInvocation();
-				app->input((float)frameTime);
+				app->input((float)frameTime, window);
 //_________________________________________________________________________
 				if (window->isKeyDown(GLFW_KEY_ESCAPE) && window->isKeyDown(GLFW_KEY_LEFT_SHIFT))
 					stop();
 //_________________________________________________________________________
 				inputTimer.stopInvocation();
+
 				updateTimer.startInvocation();
 				app->update((float)frameTime);
 				updateTimer.stopInvocation();
@@ -104,7 +106,7 @@ namespace sparky {
 
 			if (render) {
 				renderTimer.startInvocation();
-				renderingEngine->render(app->rootRender());
+				renderingEngine->render();
 				renderTimer.stopInvocation();
 				windowTimer.startInvocation();
 				
@@ -120,6 +122,7 @@ namespace sparky {
 			totalTimer.stopInvocation();
 			
 		}
+		delete renderingEngine;
 		std::cout << "[Core Engine Terminated]" << std::endl;
 	}
 
@@ -132,6 +135,7 @@ namespace sparky {
 	{
 		return app;
 	}
+
 	graphics::Window * CoreEngine::getWindow()
 	{
 		return window;

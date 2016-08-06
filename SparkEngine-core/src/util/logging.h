@@ -3,10 +3,14 @@
 namespace sparky { namespace util {
 	class Logging {
 	public:
-		static void Log(std::string msg, int errorNum) {
-			std::cout << msg.c_str() << std::endl;
+		static void log_exit(std::string msg, int errorNum) {
+			std::cerr << msg.c_str() << std::endl;
 			system("PAUSE");
 			exit(errorNum);
+		}
+
+		static void log(std::string msg) {
+			std::cerr << msg.c_str() << std::endl;
 		}
 	};
 } }

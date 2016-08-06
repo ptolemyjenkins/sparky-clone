@@ -1,20 +1,17 @@
 #pragma once
-#include "../renderable3DComponent.h"
+#include "../../Component3D.h"
+#include "../../../graphics/shader.h"
 
-
-namespace sparky { 
-	class coreEngine;
-	namespace components {
-	class baseLight : public architecture::Renderable3DComponent{
+namespace sparky { namespace components {
+	class baseLight : public architecture::Component3D {
 	private:
 		maths::vec4 colour;
 		float intensity;
 		graphics::Shader * shader;
+
 	public:
 		baseLight();
 		baseLight(maths::vec4 colour, float intensity);
-
-		void addToEngine(CoreEngine* engine);
 
 		void setIntensity(float intensity);
 		float getIntensity();
@@ -24,7 +21,5 @@ namespace sparky {
 
 		void setShader(graphics::Shader* shader);
 		graphics::Shader* getShader();
-
 	};
-
 } }

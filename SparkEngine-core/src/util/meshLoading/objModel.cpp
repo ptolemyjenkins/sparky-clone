@@ -97,7 +97,7 @@ namespace sparky { namespace util {
 		std::unordered_map<int, int> normalIndexMap;
 		std::unordered_map<int, int> indexMap;
 
-		for (int i = 0; i < pIndices.size(); i++)
+		for (unsigned int i = 0; i < pIndices.size(); i++)
 		{
 			OBJIndex currentIndex = OBJIndex(pIndices[i], tIndices[i], nIndices[i]);
 
@@ -154,13 +154,13 @@ namespace sparky { namespace util {
 		{
 			normalModel.calcNormals();
 
-			for (int i = 0; i < result->positions.size(); i++)
+			for (unsigned int i = 0; i < result->positions.size(); i++)
 				result->normals.push_back(normalModel.normals[indexMap[i]]);
 		}
 
 		normalModel.calcTangents();
 
-		for (int i = 0; i < result->positions.size(); i++)
+		for (unsigned int i = 0; i < result->positions.size(); i++)
 			result->tangents.push_back(normalModel.tangents[indexMap[i]]);
 
 		//		for(int i = 0; i < result.GetTexCoords().size(); i++)

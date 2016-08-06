@@ -12,7 +12,7 @@ namespace sparky { namespace resource {
 		this->refCount = 1;
 
 		if (m_ShaderID == 0) {
-			util::Logging::Log("Shader creation failed: could not find valid memory location in constructor", 1);
+			util::Logging::log_exit("Shader creation failed: could not find valid memory location in constructor", 1);
 		}
 	}
 

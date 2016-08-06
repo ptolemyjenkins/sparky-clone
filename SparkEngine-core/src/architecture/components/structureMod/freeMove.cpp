@@ -1,6 +1,5 @@
 #include "freeMove.h"
-#include "../Renderable3D.h"
-#include "../../coreEngine.h"
+#include "../../../coreEngine.h"
 namespace sparky { namespace components{
 	freeMove::freeMove(float speed, int forwardKey, int backKey, int leftKey, int rightKey, int upKey, int downKey, int boostKey, int slowKey)
 	{
@@ -20,9 +19,8 @@ namespace sparky { namespace components{
 
 	}
 
-	void freeMove::input(float delta)
+	void freeMove::input(float delta, graphics::Window* window)
 	{
-		graphics::Window* window = parent->getEngine()->getWindow();
 		movAmt = (float)(speed * delta);
 
 		if (window->isKeyPressed(slowKey)) {
@@ -37,18 +35,18 @@ namespace sparky { namespace components{
 			movAmt *= 10;
 		}
 
-		if (window->isKeyDown(forwardKey)) move(getTransform().rot.getForward(), movAmt);
-		if (window->isKeyDown(backKey)) move(getTransform().rot.getForward(), -movAmt);
-		if (window->isKeyDown(leftKey)) move(getTransform().rot.getRight(), movAmt);
-		if (window->isKeyDown(rightKey)) move(getTransform().rot.getRight(), -movAmt);
-		if (window->isKeyDown(upKey)) move(getTransform().rot.getUp(), movAmt);
-		if (window->isKeyDown(downKey)) move(getTransform().rot.getUp(), -movAmt);
+		if (window->isKeyDown(forwardKey)) move(getTransform()->rot.getForward(), movAmt);
+		if (window->isKeyDown(backKey)) move(getTransform()->rot.getForward(), -movAmt);
+		if (window->isKeyDown(leftKey)) move(getTransform()->rot.getRight(), movAmt);
+		if (window->isKeyDown(rightKey)) move(getTransform()->rot.getRight(), -movAmt);
+		if (window->isKeyDown(upKey)) move(getTransform()->rot.getUp(), movAmt);
+		if (window->isKeyDown(downKey)) move(getTransform()->rot.getUp(), -movAmt);
 	
 	}
 
 	void freeMove::move(maths::vec3 dir, float amt)
 	{
-		getTransform().pos += (dir * amt);
+		getTransform()->pos += (dir * amt);
 	}
 	
 

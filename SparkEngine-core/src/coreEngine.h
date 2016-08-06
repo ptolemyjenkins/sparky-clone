@@ -1,5 +1,5 @@
 #pragma once
-#include "graphics\renderingEngine.h"
+#include "architecture\application.h"
 #include "graphics\window.h"
 #include "profiling\profileTimer.h"
 #include <thread>
@@ -19,7 +19,7 @@ namespace sparky {
 		long long frameTimeNano;
 	public:
 		CoreEngine(char* title, const int& width = 400, const int& height = 400, const double& frameCap = 60);
-		void start(graphics::RenderingEngine *rendering, architecture::Application* app);
+		void start(architecture::Application* app);
 		void stop();
 		void run();
 		

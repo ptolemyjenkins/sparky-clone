@@ -1,24 +1,16 @@
 #include "baseLight.h"
-#include "../../coreEngine.h"
 
 namespace sparky { namespace components {
 	baseLight::baseLight() {
 		this->colour = maths::vec4(0,0,0,1);
 		this->intensity = 0;
-		this->shader = NULL;
+		this->shader = new graphics::Shader("forward-ambient", "forward-ambient.vs", "forward-ambient.fs");
 	}
 
 	baseLight::baseLight(maths::vec4 colour, float intensity) {
 		this->colour = colour;
 		this->intensity = intensity;
-		this->shader = NULL;
-	}
-
-	void baseLight::addToEngine(CoreEngine* engine)
-	{
-		if (engine != 0) {
-			engine->getRenderingEngine()->addLight(this);
-		}
+		this->shader = new graphics::Shader("forward-ambient", "forward-ambient.vs", "forward-ambient.fs");
 	}
 
 	void baseLight::setIntensity(float intensity)

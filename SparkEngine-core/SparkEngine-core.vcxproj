@@ -122,6 +122,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>true</ShowIncludes>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -150,15 +154,17 @@
     <ClCompile Include="external\main.cpp" />
     <ClCompile Include="libs\stb_image.c" />
     <ClCompile Include="src\architecture\application.cpp" />
-    <ClCompile Include="src\architecture\components\baseLight.cpp" />
-    <ClCompile Include="src\architecture\components\camera.cpp" />
-    <ClCompile Include="src\architecture\components\directionalLight.cpp" />
-    <ClCompile Include="src\architecture\components\FreeLook.cpp" />
-    <ClCompile Include="src\architecture\components\freeMove.cpp" />
-    <ClCompile Include="src\architecture\components\MeshRenderer.cpp" />
-    <ClCompile Include="src\architecture\components\pointLight.cpp" />
-    <ClCompile Include="src\architecture\Renderable3D.cpp" />
-    <ClCompile Include="src\architecture\renderable3DComponent.cpp" />
+    <ClCompile Include="src\architecture\components\light\baseLight.cpp" />
+    <ClCompile Include="src\architecture\components\camera\camera.cpp" />
+    <ClCompile Include="src\architecture\components\light\directionalLight.cpp" />
+    <ClCompile Include="src\architecture\components\structureMod\FreeLook.cpp" />
+    <ClCompile Include="src\architecture\components\structureMod\freeMove.cpp" />
+    <ClCompile Include="src\architecture\components\object\MeshRenderer.cpp" />
+    <ClCompile Include="src\architecture\components\light\pointLight.cpp" />
+    <ClCompile Include="src\architecture\Layer3D.cpp" />
+    <ClCompile Include="src\architecture\layerStack.cpp" />
+    <ClCompile Include="src\architecture\structure3D.cpp" />
+    <ClCompile Include="src\architecture\component3D.cpp" />
     <ClCompile Include="src\coreEngine.cpp" />
     <ClCompile Include="src\graphics\constructs\Attenuation.cpp" />
     <ClCompile Include="src\graphics\constructs\vertex.cpp" />
@@ -189,18 +195,20 @@
   <ItemGroup>
     <ClInclude Include="external\debugScene.h" />
     <ClInclude Include="libs\stb_image.h" />
-    <ClInclude Include="src\architecture\components\baseLight.h" />
-    <ClInclude Include="src\architecture\components\camera.h" />
+    <ClInclude Include="src\architecture\component3D.h" />
+    <ClInclude Include="src\architecture\components\light\baseLight.h" />
+    <ClInclude Include="src\architecture\components\camera\camera.h" />
     <ClInclude Include="src\architecture\components\components.h" />
-    <ClInclude Include="src\architecture\components\directionalLight.h" />
-    <ClInclude Include="src\architecture\components\FreeLook.h" />
-    <ClInclude Include="src\architecture\components\freeMove.h" />
-    <ClInclude Include="src\architecture\components\MeshRenderer.h" />
-    <ClInclude Include="src\architecture\components\pointLight.h" />
-    <ClInclude Include="src\architecture\Renderable3D.h" />
+    <ClInclude Include="src\architecture\components\light\directionalLight.h" />
+    <ClInclude Include="src\architecture\components\structureMod\FreeLook.h" />
+    <ClInclude Include="src\architecture\components\structureMod\freeMove.h" />
+    <ClInclude Include="src\architecture\components\object\MeshRenderer.h" />
+    <ClInclude Include="src\architecture\components\light\pointLight.h" />
+    <ClInclude Include="src\architecture\layer.h" />
+    <ClInclude Include="src\architecture\Layer3D.h" />
+    <ClInclude Include="src\architecture\layerStack.h" />
+    <ClInclude Include="src\architecture\structure3D.h" />
     <ClInclude Include="src\architecture\application.h" />
-    <ClInclude Include="src\architecture\renderable3DComponent.h" />
-    <ClInclude Include="src\core.h" />
     <ClInclude Include="src\coreEngine.h" />
     <ClInclude Include="src\graphics\constructs\Attenuation.h" />
     <ClInclude Include="src\graphics\constructs\vertex.h" />

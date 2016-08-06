@@ -1,21 +1,18 @@
 #pragma once
-#include "Renderable3D.h"
+#include "../graphics/renderingEngine.h"
 
 namespace sparky { namespace architecture {
 	class Application
 	{
 	public:
-		Renderable3D root;
-		CoreEngine* engine = 0;
+		LayerStack scene;
+		graphics::RenderingEngine * renderingEngine;
 	public:
 		Application();
 		virtual void init();
-		virtual void input(float delta);
+		virtual void input(float delta, graphics::Window* window);
 		virtual void update(float delta);
-		Renderable3D* rootRender();
-		void addObject(Renderable3D* object);
-		void addComponent(Renderable3DComponent &component);
-		void setEngine(CoreEngine* engine);
-		CoreEngine* getEngine();
+		
+		void setRenderingEngine(graphics::RenderingEngine * renderingEngine);
 	};
 } }

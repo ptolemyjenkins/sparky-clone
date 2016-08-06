@@ -1,10 +1,5 @@
 #include "shader.h"
 #include "renderingEngine.h"
-#include "../architecture/components/camera.h"
-#include "../architecture/components/pointLight.h"
-#include "../architecture/components/directionalLight.h"
-#include "../util/logging.h"
-#include "window.h"
 
 namespace sparky { namespace graphics {
 	std::vector<std::string> Shader::loadedShaderMap;
@@ -14,7 +9,7 @@ namespace sparky { namespace graphics {
 	Shader::Shader(char * fileName, const char * vertexPath, const char * fragPath)
 		: m_VertPath(vertexPath), m_FragPath(fragPath), m_FileName(fileName)
 	{
-		int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), fileName) - loadedShaderMap.begin();
+		unsigned int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), fileName) - loadedShaderMap.begin();
 		if (pos < loadedShaderMap.size()) {
 			m_resource = loadedShaders[pos];
 			m_resource->addReference();
@@ -30,7 +25,7 @@ namespace sparky { namespace graphics {
 				compileShader();
 			}
 			else {
-				util::Logging::Log("Error: failed shader build",1);
+				util::Logging::log_exit("Error: failed shader build",1);
 			}
 
 			addAllUniforms(vertShaderString,fileName);
@@ -41,42 +36,11 @@ namespace sparky { namespace graphics {
 	Shader::~Shader()
 	{
 		if (m_resource->removeReference()) {
-			int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), m_FileName) - loadedShaderMap.begin();
+			unsigned int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), m_FileName) - loadedShaderMap.begin();
 			if (pos < loadedShaderMap.size()) {
 				loadedShaderMap.erase(loadedShaderMap.begin() + pos);
 				loadedShaders.erase(loadedShaders.begin() + pos);
 			}
-		}
-	}
-
-	void Shader::init(char * fileName, const char * vertexPath, const char * fragPath)
-	{
-		if (m_FileName != nullptr) {
-			util::Logging::Log("Error: Reinitialisation of shader", 1);
-		}
-		m_VertPath = vertexPath;
-		m_FragPath = fragPath;
-		m_FileName = fileName;
-		int pos = std::find(loadedShaderMap.begin(), loadedShaderMap.end(), fileName) - loadedShaderMap.begin();
-		if (pos < loadedShaderMap.size()) {
-			m_resource = loadedShaders[pos];
-			m_resource->addReference();
-		}
-		else {
-			m_resource = new resource::ShaderResource();
-			m_resource->init();
-			loadedShaderMap.push_back(fileName);
-			loadedShaders.push_back(m_resource);
-			std::string vertShaderString = importShader(m_VertPath);
-			std::string fragShaderString = importShader(m_FragPath);
-			if (addVertexShader(vertShaderString) && addFragmentShader(fragShaderString)) {
-				compileShader();
-			}
-			else {
-				util::Logging::Log("Error: failed shader build", 1);
-			}
-			addAllUniforms(vertShaderString, fileName);
-			addAllUniforms(fragShaderString, fileName);
 		}
 	}
 
@@ -169,16 +133,16 @@ namespace sparky { namespace graphics {
 	// uniform handling
 	// -------------------------------------------------------------------------------------------------------------------
 
-	void Shader::updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
-		mat4 model = transform.getTransformation();
-		mat4 MVP = renderingEngine.getMainCamera()->getViewProjection() *  model;
-		for (int i = 0; i < m_resource->getUniformNames().size(); i++) {
+	void Shader::updateUniforms(Transform* transform, Material* material, RenderingEngine* renderingEngine, components::camera* camera, components::baseLight* light) {
+		mat4 model = transform->getTransformation();
+		mat4 MVP = camera->getViewProjection() *  model;
+		for (unsigned int i = 0; i < m_resource->getUniformNames().size(); i++) {
 			std::string uniformName = m_resource->getUniformNames()[i];
 			std::string uniformType = m_resource->getUniformTypes()[i];
 
 			if (uniformType == "sampler2D") {
-				int samplerSlot = renderingEngine.getSamplerSlot(uniformName);
-				material.getTexture(uniformName)->bind(samplerSlot);
+				int samplerSlot = renderingEngine->getSamplerSlot(uniformName);
+				material->getTexture(uniformName)->bind(samplerSlot);
 				setUniform1i(uniformName.c_str(), samplerSlot);
 				continue;
 			}
@@ -198,20 +162,20 @@ namespace sparky { namespace graphics {
 			else if (util::FileUtils::startsWith(uniformName,"R_")) {
 				std::string uprefixedUniformName = uniformName.substr(2);
 				if (uniformType == "vec3") {
-					setUniform3f(uniformName.c_str(), renderingEngine.getVec3(uprefixedUniformName));
+					setUniform3f(uniformName.c_str(), light->getColour() * light->getIntensity());
 					continue;
 				}
 				else if (uniformType == "float") {
-					setUniform1f(uniformName.c_str(), renderingEngine.getFloat(uprefixedUniformName));
+					setUniform1f(uniformName.c_str(), renderingEngine->getFloat(uprefixedUniformName));
 					continue;
 				}
 				else if (uniformType == "DirectionalLight") {
-					components::directionalLight* a = static_cast<components::directionalLight*>(renderingEngine.getActiveLight());
+					components::directionalLight* a = static_cast<components::directionalLight*>(light);
 					setUniformDirectionalLight(uniformName, *a);
 					continue;
 				}
 				else if (uniformType == "PointLight") {
-					setUniformPointLight(uniformName, *static_cast<components::pointLight*>(renderingEngine.getActiveLight()));
+					setUniformPointLight(uniformName, *static_cast<components::pointLight*>(light));
 					continue;
 				}
 				//else if (uniformType == "SpotLight") {
@@ -225,25 +189,25 @@ namespace sparky { namespace graphics {
 			}
 			else if (util::FileUtils::startsWith(uniformName,"C_")) {
 				if (uniformName == "C_eyePos") {
-					setUniform3f(uniformName.c_str(), renderingEngine.getMainCamera()->getTransform().getTransformedPos());
+					setUniform3f(uniformName.c_str(), camera->getTransform()->getTransformedPos());
 					continue;
 				}
 				else {
-					util::Logging::Log("Error: " + uniformName + " is not a valid component of Camera", 1);
+					util::Logging::log_exit("Error: " + uniformName + " is not a valid component of Camera", 1);
 				}
 			}
 			else {
 				if (uniformType == "vec3") {
-					setUniform3f(uniformName.c_str(), material.getVec3(uniformName));
+					setUniform3f(uniformName.c_str(), material->getVec3(uniformName));
 					continue;
 				}
 				else if (uniformType == "float") {
-					float a = material.getFloat(uniformName);
-					setUniform1f(uniformName.c_str(), material.getFloat(uniformName));
+					float a = material->getFloat(uniformName);
+					setUniform1f(uniformName.c_str(), material->getFloat(uniformName));
 					continue;
 				}
 				else {
-					util::Logging::Log("Error: " + uniformName + " is not a supported type in Material", 1);
+					util::Logging::log_exit("Error: " + uniformName + " is not a supported type in Material", 1);
 				}
 			}
 		}
@@ -328,7 +292,7 @@ namespace sparky { namespace graphics {
 		int uniformLocation = glGetUniformLocation(m_resource->getProgram(), uniformName.c_str());
 
 		if (uniformLocation == 0xFFFFFFFF) {
-			util::Logging::Log("Error: Uniform " + uniformName + " could not be found", 1);
+			util::Logging::log_exit("Error: Uniform " + uniformName + " could not be found", 1);
 		}
 
 		m_resource->getUniforms()[uniformName] =  uniformLocation;
@@ -351,7 +315,7 @@ namespace sparky { namespace graphics {
 		setUniform1f((uniformName + ".atten.constant").c_str(), pointLight.getAttenuation().getConstant());
 		setUniform1f((uniformName + ".atten.linear").c_str(), pointLight.getAttenuation().getLinear());
 		setUniform1f((uniformName + ".atten.exponent").c_str(), pointLight.getAttenuation().getExponent());
-		setUniform3f((uniformName + ".position").c_str(), pointLight.getTransform().getTransformedPos());
+		setUniform3f((uniformName + ".position").c_str(), pointLight.getTransform()->getTransformedPos());
 		setUniform1f((uniformName + ".range").c_str(), pointLight.getRange());
 	}
 
