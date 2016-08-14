@@ -1,6 +1,7 @@
 #include "texture.h"
 #include <unordered_map>
 #include "../../libs/stb_image.h"
+#include <string>
 
 namespace sparky { namespace graphics {
 	std::unordered_map<std::string, resource::TextureResource> Texture::loadedTextures;
@@ -46,7 +47,7 @@ namespace sparky { namespace graphics {
 			glBindTexture(GL_TEXTURE_2D, resource->getID());
 		}
 		else {
-			std::cerr << "Error: Invalid texture sampler slot:" << samplerSlot << std::endl;
+			util::Logging::log("Error: Invalid texture sampler slot:" + std::to_string(samplerSlot) + "\n");
 		}
 	}
 
@@ -73,7 +74,7 @@ namespace sparky { namespace graphics {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 			GLenum error = glGetError();
 			if (error != GL_NO_ERROR)
-				std::cout << "OpenGL Error: " << error << std::endl;
+				util::Logging::log("OpenGL Error: " + std::to_string(error) + "\n");
 			glBindTexture(GL_TEXTURE_2D, 0);
 			stbi_image_free(imageData);
 		}catch (std::exception& e) {

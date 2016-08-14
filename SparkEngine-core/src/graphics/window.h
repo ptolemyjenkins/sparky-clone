@@ -13,6 +13,7 @@ namespace sparky { namespace graphics {
 		const char *m_Title;
 		int m_Width, m_Height;
 		GLFWwindow *m_Window;
+		bool shouldClose = false;
 		bool m_KeysDown[MAX_KEYS];
 		bool m_LastKeysDown[MAX_KEYS];
 		bool m_MouseButtonsDown[MAX_BUTTONS];
@@ -37,6 +38,7 @@ namespace sparky { namespace graphics {
 		void getMousePosition(double& x, double& y) const;
 		maths::vec2 getMousePosition();
 		void setMousePosition(double x, double y);
+		void close();
 	private:
 		bool init();
 		friend void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods);

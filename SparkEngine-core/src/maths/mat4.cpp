@@ -68,12 +68,12 @@ namespace sparky { namespace maths {
 	{
 		for (int y = 0; y < 4; y++)
 		{
-			std::cout << "[";
+			util::Logging::log("[");
 			for (int x = 0; x < 4; x++)
 			{
-				std::cout << get(x, y) << " ";
+				util::Logging::log(std::to_string(get(x, y)) + " ");
 			}
-			std::cout << "]" << std::endl;
+			util::Logging::log("]\n");
 		}
 	}
 

@@ -24,11 +24,11 @@ namespace sparky { namespace graphics {
 	bool Window::init()
 	{
 		if (!glfwInit())
-			std::cerr << "ERROR: glfw init failed" << std::endl;
+			util::Logging::log_exit("ERROR: glfw init failed", 1);
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL/*glfwGetPrimaryMonitor()*/, NULL);
 		if (!m_Window)
 		{
-			std::cerr << "ERROR: Failed to create GLFW Window" << std::endl;
+			util::Logging::log_exit("ERROR: Failed to create GLFW Window",1);
 			return false;
 		}
 		glfwMakeContextCurrent(m_Window);
@@ -40,10 +40,18 @@ namespace sparky { namespace graphics {
 		glfwSwapInterval(0);
 		if (glewInit() != GLEW_OK)
 		{
-			std::cerr << "ERROR: Glew failed to initialise";
+			util::Logging::log_exit("ERROR: Glew failed to initialise",1);
 			return false;
 		}
-		std::cout << glGetString(GL_VERSION) << std::endl;
+		std::string glVendor = reinterpret_cast< char const * >(glGetString(GL_VENDOR));
+		std::string glVersion = reinterpret_cast< char const * >(glGetString(GL_VERSION));
+		std::string glRenderer = reinterpret_cast< char const * >(glGetString(GL_RENDERER));
+		std::string glShaderVersion = reinterpret_cast< char const * >(glGetString(GL_SHADING_LANGUAGE_VERSION));
+		//std::string glExtensions = reinterpret_cast< char const * >(glGetString(GL_EXTENSIONS));
+
+		util::Logging::log(glVendor + " - " + glVersion + "\n");
+		util::Logging::log(glRenderer + " - " + glShaderVersion + "\n");
+		//util::Logging::log(glExtensions + "\n");
 		return true;
 	}
 	
@@ -51,7 +59,7 @@ namespace sparky { namespace graphics {
 	{
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << std::endl;
+			util::Logging::log_exit("OpenGL Error: " + error ,1);
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
@@ -59,7 +67,7 @@ namespace sparky { namespace graphics {
 
 	bool Window::closed() const
 	{
-		return glfwWindowShouldClose(m_Window) == 1;
+		return glfwWindowShouldClose(m_Window) == 1 || shouldClose;
 	}
 
 	Window::~Window()
@@ -71,7 +79,7 @@ namespace sparky { namespace graphics {
 	{
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << std::endl;
+			util::Logging::log_exit("OpenGL Error: " + error, 1);
 	}
 
 	//input handling
@@ -125,12 +133,17 @@ namespace sparky { namespace graphics {
 
 	maths::vec2 Window::getMousePosition()
 	{
-		return maths::vec2(m_mx, m_my);
+		return maths::vec2((float) m_mx, (float) m_my);
 	}
 
 	void Window::setMousePosition(double x, double y)
 	{
 		glfwSetCursorPos(m_Window, x, y);
+	}
+
+	void Window::close()
+	{
+		shouldClose = true;
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)

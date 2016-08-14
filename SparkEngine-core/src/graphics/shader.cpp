@@ -91,7 +91,8 @@ namespace sparky { namespace graphics {
 			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(vertex, length, &length, &error[0]);
-			std::cout << "ERROR: failed to compile " << m_VertPath << ":\n" << &error[0] << std::endl;
+			std::string  a = (m_VertPath);
+			util::Logging::log("ERROR: failed to compile " + a + ":\n" + &error[0] + "\n");
 			glDeleteShader(vertex);
 			return 0;
 		}
@@ -114,7 +115,8 @@ namespace sparky { namespace graphics {
 			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(fragment, length, &length, &error[0]);
-			std::cout << "ERROR: failed to compile " << m_FragPath << ":\n" << &error[0] << std::endl;
+			std::string  a = (m_FragPath);
+			util::Logging::log("ERROR: failed to compile " + a + ":\n" + &error[0]);
 			glDeleteShader(fragment);
 			return 0;
 		}
@@ -156,7 +158,7 @@ namespace sparky { namespace graphics {
 					continue;
 				}
 				else {
-					 std::cout << "Error: " << uniformName << " is not a valid component of Transform" << std::endl;
+					util::Logging::log_exit("Error: " + uniformName + " is not a valid component of Transform\n",1);
 				}
 			}
 			else if (util::FileUtils::startsWith(uniformName,"R_")) {
@@ -312,9 +314,9 @@ namespace sparky { namespace graphics {
 
 	void Shader::setUniformPointLight(std::string uniformName, components::pointLight pointLight) {
 		setUniformBaseLight(uniformName + ".base", pointLight);
-		setUniform1f((uniformName + ".atten.constant").c_str(), pointLight.getAttenuation().getConstant());
-		setUniform1f((uniformName + ".atten.linear").c_str(), pointLight.getAttenuation().getLinear());
-		setUniform1f((uniformName + ".atten.exponent").c_str(), pointLight.getAttenuation().getExponent());
+		setUniform1f((uniformName + ".atten.constant").c_str(), pointLight.getAttenuation().m_constant);
+		setUniform1f((uniformName + ".atten.linear").c_str(), pointLight.getAttenuation().m_linear);
+		setUniform1f((uniformName + ".atten.exponent").c_str(), pointLight.getAttenuation().m_exponent);
 		setUniform3f((uniformName + ".position").c_str(), pointLight.getTransform()->getTransformedPos());
 		setUniform1f((uniformName + ".range").c_str(), pointLight.getRange());
 	}

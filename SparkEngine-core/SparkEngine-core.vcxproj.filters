@@ -54,13 +54,7 @@
     <ClCompile Include="src\graphics\renderingEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\constructs\Attenuation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceManagment\MeshResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\constructs\vertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\mesh.cpp">
@@ -129,13 +123,16 @@
     <ClCompile Include="src\architecture\layerStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\architecture\Layer3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\architecture\structure3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\architecture\component3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\layer3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,9 +188,6 @@
     <ClInclude Include="src\graphics\renderingEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\constructs\Attenuation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -201,9 +195,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManagment\MeshResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\constructs\vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\material.h">
@@ -257,9 +248,6 @@
     <ClInclude Include="src\architecture\layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\architecture\Layer3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\architecture\layerStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -290,11 +278,20 @@
     <ClInclude Include="src\architecture\component3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\architecture\layer2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\layer3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.v" />
     <None Include="res\shaders\basic.f" />
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Log.txt" />
   </ItemGroup>
 </Project>

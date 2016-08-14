@@ -1,6 +1,6 @@
 #pragma once
-#include "../src/architecture/application.h"
-#include "../src/architecture/Layer3D.h"
+#include "..\src\coreEngine.h"
+#include "../src/architecture/layer3D.h"
 #include "../src/util/meshLoading/basicMeshs.h"
 
 namespace sparky {
@@ -8,5 +8,6 @@ namespace sparky {
 	{
 		void init();
 		void update(float delta);
+		void input(float delta, graphics::Window* window);
 	};
 }

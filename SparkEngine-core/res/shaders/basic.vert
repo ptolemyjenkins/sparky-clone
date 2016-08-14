@@ -10,9 +10,17 @@ out vec3 positions0;
 uniform mat4 T_MVP;
 
 
+out DATA
+{
+	vec4 position;
+	vec4 color;
+} vs_out;
+
 void main()
 {
 	gl_Position = T_MVP * vec4(position, 1.0);
 	texCoord0 = texCoord;
 	positions0 = position;
+	vs_out.position = ml_matrix * vec4(position, 1.0);
+	vs_out.color = color;
 }

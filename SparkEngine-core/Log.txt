@@ -1,0 +1,8 @@
+NVIDIA Corporation - 4.5.0 NVIDIA 368.81
+GeForce GTX 980 Ti/PCIe/SSE2 - 4.50 NVIDIA
+58.44 Fps-- Total: 17.28ms.  Input: 0.01ms.  Update: 0.01ms.  Render: 0.75ms.  Window: 0.07ms.  Sleep: 16.43ms.  Unaccounted: 0.01
+60.00 Fps-- Total: 16.67ms.  Input: 0.00ms.  Update: 0.00ms.  Render: 0.66ms.  Window: 0.19ms.  Sleep: 15.47ms.  Unaccounted: 0.34
+59.96 Fps-- Total: 16.68ms.  Input: 0.00ms.  Update: 0.00ms.  Render: 0.69ms.  Window: 0.07ms.  Sleep: 15.62ms.  Unaccounted: 0.29
+60.16 Fps-- Total: 16.85ms.  Input: 0.02ms.  Update: 0.00ms.  Render: 0.73ms.  Window: 0.09ms.  Sleep: 15.70ms.  Unaccounted: 0.31
+59.99 Fps-- Total: 16.67ms.  Input: 0.02ms.  Update: 0.00ms.  Render: 0.72ms.  Window: 0.06ms.  Sleep: 15.55ms.  Unaccounted: 0.31
+Error >> "mainCamfera" not found

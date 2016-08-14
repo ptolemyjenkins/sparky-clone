@@ -1,8 +1,19 @@
 #pragma once
 #include "baseLight.h"
-#include "../../../graphics/constructs/Attenuation.h"
 
-namespace sparky { namespace components {
+namespace sparky { 
+	namespace graphics {
+	struct Attenuation {
+		float m_constant;
+		float m_linear;
+		float m_exponent;
+		Attenuation() {}
+		Attenuation(float constant, float linear, float exponent) : m_constant(constant), m_linear(linear), m_exponent(exponent) {}
+
+	};
+
+	}
+	namespace components {
 		class pointLight : public baseLight {
 		private:
 			static const int COLOUR_DEPTH = 256;

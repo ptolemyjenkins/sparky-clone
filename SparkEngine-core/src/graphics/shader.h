@@ -1,7 +1,5 @@
 #pragma once
 #include "../ResourceManagment/ShaderResource.h"
-#include "../util/fileutils.h"
-
 #include "../graphics/constructs/transform.h"
 #include "material.h"
 

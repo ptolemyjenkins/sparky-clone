@@ -12,7 +12,6 @@ namespace sparky { namespace graphics {
 		architecture::LayerStack* scene;
 	public:
 		RenderingEngine();
-		void initShaders();
 
 		void render();
 		void forwardBlendOn();

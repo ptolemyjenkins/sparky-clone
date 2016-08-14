@@ -8,11 +8,6 @@ namespace sparky { namespace graphics {
 		samplerMap["normalMap"] = 1;
 		samplerMap["dispMap"] =  2;
 
-	}
-
-	void RenderingEngine::initShaders()
-	{
-
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);

@@ -1,5 +1,6 @@
 #pragma once
 #include <GL\glew.h>
+#include "../util/fileutils.h"
 
 namespace sparky { namespace resource{
 	class TextureResource {

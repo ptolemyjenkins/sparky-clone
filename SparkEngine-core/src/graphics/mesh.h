@@ -1,6 +1,5 @@
 #pragma once
 #include "../ResourceManagment/MeshResource.h"
-#include "constructs\vertex.h"
 #include "../util/meshLoading/meshLoading.h"
 namespace sparky { namespace graphics {
 	class Mesh {

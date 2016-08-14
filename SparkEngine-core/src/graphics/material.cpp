@@ -49,8 +49,7 @@ namespace sparky { namespace graphics {
 			resource = result->second;
 		}
 		else {
-			std::cout << "Error: [TEXTURE] unable to retrieve <" << name.c_str() << "> from texture HashMap." << std::endl;
-			exit(1);
+			util::Logging::log_exit("Error: [TEXTURE] unable to retrieve <" + name + "> from texture HashMap.\n",1);
 		}
 		return resource;
 	}

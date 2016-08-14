@@ -15,7 +15,7 @@ namespace sparky { namespace profiling {
 	void ProfileTimer::stopInvocation()
 	{
 		if (startTime == 0) {
-			std::cout << "Error: Stop Invocation call without matching start invocation" << std::endl;
+			util::Logging::log("Error: Stop Invocation call without matching start invocation");
 			return;
 		}
 		numInvocations++;
@@ -39,7 +39,11 @@ namespace sparky { namespace profiling {
 			}
 		}
 		time = totalTime / (double) (1000000 * dividend);
-		printf("%s %.2fms. ", message, time);
+		char number[24];
+		sprintf(number, "%.2f", time);
+		std::string a = message;
+		std::string b = number;
+		util::Logging::log(a + " " + b + "ms. "); 
 		totalTime = 0;
 		numInvocations = 0;
 		return time;

@@ -1,6 +1,7 @@
 #pragma once
-#include <iostream>
+#include <string>
 #include "../util/time.h"
+#include "../util/fileUtils.h"
 
 namespace sparky { namespace profiling {
 	class ProfileTimer

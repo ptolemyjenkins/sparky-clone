@@ -22,8 +22,8 @@ namespace sparky { namespace components {
 	void camera::printState()
 	{
 		graphics::Transform* a = getTransform();
-		std::cout << "Current Position: " << a->getTransformedPos() << std::endl;
-		std::cout << "Current tilt: " << a->getTransformedRot().getForward() << std::endl;
+		util::Logging::log("Current Position: " + a->getTransformedPos().display());
+		util::Logging::log("Current tilt: " + a->getTransformedRot().getForward().display());
 	}
 
 } }

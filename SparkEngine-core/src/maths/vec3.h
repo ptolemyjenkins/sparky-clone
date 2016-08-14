@@ -28,7 +28,7 @@ namespace sparky { namespace maths {
 		float dot(const vec3& other) const;
 		vec3 cross(const vec3& other) const;
 
-		void display();
+		std::string display();
 		
 		vec3& absolute();
 		vec3& normalised();

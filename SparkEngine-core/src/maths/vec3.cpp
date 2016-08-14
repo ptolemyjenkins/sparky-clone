@@ -103,9 +103,9 @@ namespace sparky { namespace maths {
 		return a;
 	}
 
-	void vec3::display()
+	std::string vec3::display()
 	{
-		std::cout << "vec3: [" << x << ", " << y << ", " << z << "]" << std::endl;
+		return ("vec3: [" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "]\n");
 	}
 
 	vec3 & vec3::absolute()

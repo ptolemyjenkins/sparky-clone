@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
 #include <algorithm> 
 #include <functional> 
 #include <cctype>
 #include <locale>
+#include <fstream>
 #include "logging.h"
 
 namespace sparky { namespace util {
@@ -29,6 +29,17 @@ namespace sparky { namespace util {
 			return result;
 		}
 
+		static void append_file(const char* filepath, std::string text) {
+			std::ofstream ofs;
+			ofs.open(filepath, std::ios_base::app);
+			ofs << text.c_str();
+		}
+
+		static void clear_file(const char* filepath) {
+			std::ofstream ofs;
+			ofs.open(filepath, std::ofstream::out | std::ofstream::trunc);
+			ofs.close();
+		}
 
 		static bool startsWith(std::string string, std::string text) {
 			std::string start = string.substr(0, text.size());

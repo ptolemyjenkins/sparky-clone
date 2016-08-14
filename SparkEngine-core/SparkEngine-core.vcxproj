@@ -161,13 +161,11 @@
     <ClCompile Include="src\architecture\components\structureMod\freeMove.cpp" />
     <ClCompile Include="src\architecture\components\object\MeshRenderer.cpp" />
     <ClCompile Include="src\architecture\components\light\pointLight.cpp" />
-    <ClCompile Include="src\architecture\Layer3D.cpp" />
+    <ClCompile Include="src\architecture\layer3D.cpp" />
     <ClCompile Include="src\architecture\layerStack.cpp" />
     <ClCompile Include="src\architecture\structure3D.cpp" />
     <ClCompile Include="src\architecture\component3D.cpp" />
     <ClCompile Include="src\coreEngine.cpp" />
-    <ClCompile Include="src\graphics\constructs\Attenuation.cpp" />
-    <ClCompile Include="src\graphics\constructs\vertex.cpp" />
     <ClCompile Include="src\graphics\material.cpp" />
     <ClCompile Include="src\graphics\mesh.cpp" />
     <ClCompile Include="src\graphics\renderingEngine.cpp" />
@@ -188,6 +186,7 @@
     <ClCompile Include="src\ResourceManagment\MeshResource.cpp" />
     <ClCompile Include="src\ResourceManagment\ShaderResource.cpp" />
     <ClCompile Include="src\ResourceManagment\TextureResource.cpp" />
+    <ClCompile Include="src\util\logging.cpp" />
     <ClCompile Include="src\util\meshLoading\basicMeshs.cpp" />
     <ClCompile Include="src\util\meshLoading\indexedModel.cpp" />
     <ClCompile Include="src\util\meshLoading\objModel.cpp" />
@@ -205,13 +204,12 @@
     <ClInclude Include="src\architecture\components\object\MeshRenderer.h" />
     <ClInclude Include="src\architecture\components\light\pointLight.h" />
     <ClInclude Include="src\architecture\layer.h" />
-    <ClInclude Include="src\architecture\Layer3D.h" />
+    <ClInclude Include="src\architecture\layer2D.h" />
+    <ClInclude Include="src\architecture\layer3D.h" />
     <ClInclude Include="src\architecture\layerStack.h" />
     <ClInclude Include="src\architecture\structure3D.h" />
     <ClInclude Include="src\architecture\application.h" />
     <ClInclude Include="src\coreEngine.h" />
-    <ClInclude Include="src\graphics\constructs\Attenuation.h" />
-    <ClInclude Include="src\graphics\constructs\vertex.h" />
     <ClInclude Include="src\graphics\material.h" />
     <ClInclude Include="src\graphics\mesh.h" />
     <ClInclude Include="src\graphics\renderingEngine.h" />
@@ -249,6 +247,9 @@
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.v" />
     <None Include="res\shaders\basic.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Log.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

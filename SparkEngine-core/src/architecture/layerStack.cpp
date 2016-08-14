@@ -9,30 +9,35 @@ namespace sparky { namespace architecture {
 	void LayerStack::input(float delta, graphics::Window* window)
 	{
 		for (Layer* layer : layers) {
-			layer->input(delta, window);
+			if (layer->visible) {
+				layer->input(delta, window);
+			}
 		}
 	}
 	void LayerStack::update(float delta)
 	{
 		for (Layer* layer : layers) {
-			layer->update(delta);
+			if (layer->visible) {
+				layer->update(delta);
+			}
 		}
 	}
 	void LayerStack::render(graphics::RenderingEngine* renderingEngine)
 	{
 		for (Layer* layer : layers) {
-			
-			for (components::baseLight* light : layer->lightList) {
-				graphics::Shader* shader = light->getShader();
-				shader->bind();
-				for (components::MeshRenderer* object : layer->meshList) {
-					shader->updateUniforms(object->getTransform(), object->getMaterial(), renderingEngine, layer->activeCamera, light);
-					object->getMesh()->draw();
+			if (layer->visible) {
+				for (components::baseLight* light : layer->lightList) {
+					graphics::Shader* shader = light->getShader();
+					shader->bind();
+					for (components::MeshRenderer* object : layer->meshList) {
+						shader->updateUniforms(object->getTransform(), object->getMaterial(), renderingEngine, layer->activeCamera, light);
+						object->getMesh()->draw();
+					}
+					shader->disable();
+					renderingEngine->forwardBlendOn();
 				}
-				shader->disable();
-				renderingEngine->forwardBlendOn();
+				renderingEngine->forwardBlendOff();
 			}
-			renderingEngine->forwardBlendOff();
 		}
 	}
 

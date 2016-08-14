@@ -15,18 +15,18 @@ namespace sparky { namespace components {
 
 	void freeLook::input(float delta, graphics::Window* window)
 	{
-		centrePosition = maths::vec2(window->getWidth() / 2.0, window->getHeight() / 2.0);
+		centrePosition = maths::vec2((float) (window->getWidth() / 2.0),(float) (window->getHeight() / 2.0));
 		if (window->isKeyPressed(unlockMouseKey)) {
 			mouseLocked = false;
 		}
 
 
 
-		float keyRot = 100 * sensitivity*delta;
+		float keyRot = 150 * sensitivity * delta;
 		if (window->isKeyDown(GLFW_KEY_RIGHT)) getTransform()->rotateTrans(maths::quaternion(yAxis, keyRot));
 		if (window->isKeyDown(GLFW_KEY_LEFT)) getTransform()->rotateTrans(maths::quaternion(yAxis, -keyRot));
-		if (window->isKeyDown(GLFW_KEY_UP)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), -keyRot));
-		if (window->isKeyDown(GLFW_KEY_DOWN)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), keyRot));
+		if (window->isKeyDown(GLFW_KEY_UP)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), keyRot));
+		if (window->isKeyDown(GLFW_KEY_DOWN)) getTransform()->rotateTrans(maths::quaternion(getTransform()->rot.getRight(), -keyRot));
 
 
 		if (mouseLocked) {
