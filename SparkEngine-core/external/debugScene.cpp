@@ -2,7 +2,7 @@
 #include "../libs/stb_image.h"
 
 namespace sparky {
-	void DebugScene::init()
+	void DebugScene::init(graphics::Window* window)
 	{
 		renderingEngine->setClearColour(maths::vec4(0.05, 0.1, 0.2, 0));
 
@@ -47,14 +47,44 @@ namespace sparky {
 		testLayer3D->getTransform("camStruct")->pos.set(0, 0, -5);
 		components::pointLight* poi = new components::pointLight(maths::vec4(0.8, 0.2, 0.9, 1), 2, graphics::Attenuation(1,1,0.1));
 		testLayer3D->addLight("pointLight", poi, "camStruct");
-		testLayer3D->visible = true;
-		scene.layers.push_back(testLayer3D);
+		testLayer3D->visible = false;
+		scene.addLayer3D(testLayer3D);
+
+
+		architecture::Layer2D* testLayer2D = new architecture::Layer2D;
+		
+		int x = window->getWidth();
+		int y = window->getHeight();
+		components::camera* cam2D = new components::camera(0,x,0,y,-1000,1000);
+		srand(time(NULL));
+		testLayer2D->addCamera("mainCamera2D", cam2D, "camStruct2D");
+		for (int i=0; i < 100; i++) {
+			for (int j=0; j < 100; j++) {
+				testLayer2D->addSprite(std::to_string(i*100+j), new components::Sprite(maths::vec4(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f,1)), std::to_string(i * 100 + j));
+				testLayer2D->getTransform(std::to_string(i * 100 + j))->scale.set(5, 5, 1);
+				testLayer2D->getTransform(std::to_string(i * 100 + j))->pos.set(i * x/100.0f+10,j* y/100.0f+10,100);
+			}
+		}
+		testLayer2D->visible = true;
+		scene.addLayer2D(testLayer2D);
+
 	}
 
 	void DebugScene::update(float delta)
 	{
-		architecture::Layer3D* layer = static_cast<architecture::Layer3D*> (scene.getLayer(0));
-		layer->getTransform("directionalLightStruct")->rotateTrans(maths::quaternion(maths::vec3(0, 1, 0), delta*8));
+		architecture::Layer3D* layer3D = (scene.getLayer3D(0));
+		architecture::Layer2D* layer2D =  (scene.getLayer2D(0));
+		layer3D->getTransform("directionalLightStruct")->rotateTrans(maths::quaternion(maths::vec3(0, 1, 0), delta*8));
+		srand(time(NULL));
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
+				layer2D->getTransform(std::to_string(i * 100 + j))->rotateTrans(maths::quaternion(maths::vec3(i/100.0f, j/100, i+j/200), sin(i*j/20) *1000 *  delta));
+				layer2D->getTransform(std::to_string(i * 100 + j))->rotateTrans(maths::quaternion(maths::vec3(0, 0, 1), 100 * delta));
+				layer2D->getTransform(std::to_string(i * 100 + j))->pos.y += sin((i/16.0)+counter*2)*25;
+
+			}
+		}
+		counter += delta;
 	}
 
 	void DebugScene::input(float delta, graphics::Window * window)
@@ -63,7 +93,7 @@ namespace sparky {
 		if (window->isKeyDown(GLFW_KEY_ESCAPE) && window->isKeyDown(GLFW_KEY_LEFT_SHIFT))
 			window->close();
 		
-		architecture::Layer3D* layer = static_cast<architecture::Layer3D*> (scene.getLayer(0));
+		architecture::Layer3D* layer = static_cast<architecture::Layer3D*> (scene.getLayer3D(0));
 		if (window->isKeyPressed(GLFW_KEY_L)) {
 			layer->visible = !layer->visible;
 		}

@@ -1,18 +1,18 @@
 #pragma once
-#include "../graphics/constructs/transform.h"
+#include "../graphics/transform.h"
 #include "../graphics/window.h"
 namespace sparky { namespace architecture {
-	class Structure3D;
+	class Structure;
 	
-	class Component3D
+	class Component
 	{
 	protected:
-		Structure3D * parent;
+		Structure * parent;
 	public:
-		Component3D();
+		Component();
 		virtual void input(float delta, graphics::Window* window) {}
 		virtual void update(float delta) {}
 		graphics::Transform* getTransform();
-		void setParent(Structure3D * parent);
+		void setParent(Structure * parent);
 	};
 } }

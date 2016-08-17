@@ -1,8 +1,10 @@
 #pragma once
 #include "camera\camera.h"
+#include "light\light2D.h"
 #include "light\baseLight.h"
 #include "light\directionalLight.h"
 #include "light\pointLight.h"
-#include "object\MeshRenderer.h"
-#include "structureMod\FreeLook.h"
+#include "object\meshRenderer.h"
+#include "object\sprite.h"
+#include "structureMod\freeLook.h"
 #include "structureMod\freeMove.h"

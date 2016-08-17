@@ -1,25 +1,25 @@
-#include "structure3D.h"
+#include "structure.h"
 namespace sparky { namespace architecture {
-	Structure3D::Structure3D()
+	Structure::Structure()
 	{
 		children.reserve(5);
 		components.reserve(5);
 	}
 
-	void Structure3D::addChild(Structure3D *child)
+	void Structure::addChild(Structure *child)
 	{
 		children.push_back(child);
 		child->getTransform()->setParent(&transform);
 	}
 
-	Structure3D & Structure3D::addComponent(Component3D* component)
+	Structure & Structure::addComponent(Component* component)
 	{
 		components.push_back(component);
 		component->setParent(this);
 		return *this;
 	}
 
-	void Structure3D::input(const float & delta, graphics::Window* window)
+	void Structure::input(const float & delta, graphics::Window* window)
 	{
 		int a = children.size();
 		for (int i = 0; i < a; i++)
@@ -33,7 +33,7 @@ namespace sparky { namespace architecture {
 		}
 	}
 
-	void Structure3D::update(const float & delta)
+	void Structure::update(const float & delta)
 	{
 		for (int i = 0; i < (int) children.size(); i++)
 		{
@@ -46,12 +46,12 @@ namespace sparky { namespace architecture {
 		}
 	}
 
-	graphics::Transform* Structure3D::getTransform()
+	graphics::Transform* Structure::getTransform()
 	{
 		return &transform;
 	}
 
-	void Structure3D::updateTransforms()
+	void Structure::updateTransforms()
 	{
 		for (int i = 0; i < (int)children.size(); i++)
 		{

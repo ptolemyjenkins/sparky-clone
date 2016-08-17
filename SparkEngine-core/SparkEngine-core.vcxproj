@@ -157,20 +157,22 @@
     <ClCompile Include="src\architecture\components\light\baseLight.cpp" />
     <ClCompile Include="src\architecture\components\camera\camera.cpp" />
     <ClCompile Include="src\architecture\components\light\directionalLight.cpp" />
-    <ClCompile Include="src\architecture\components\structureMod\FreeLook.cpp" />
+    <ClCompile Include="src\architecture\components\light\light2D.cpp" />
+    <ClCompile Include="src\architecture\components\object\meshRenderer.cpp" />
+    <ClCompile Include="src\architecture\components\structureMod\freeLook.cpp" />
     <ClCompile Include="src\architecture\components\structureMod\freeMove.cpp" />
-    <ClCompile Include="src\architecture\components\object\MeshRenderer.cpp" />
     <ClCompile Include="src\architecture\components\light\pointLight.cpp" />
+    <ClCompile Include="src\architecture\layer2D.cpp" />
     <ClCompile Include="src\architecture\layer3D.cpp" />
     <ClCompile Include="src\architecture\layerStack.cpp" />
-    <ClCompile Include="src\architecture\structure3D.cpp" />
-    <ClCompile Include="src\architecture\component3D.cpp" />
+    <ClCompile Include="src\architecture\structure.cpp" />
+    <ClCompile Include="src\architecture\component.cpp" />
     <ClCompile Include="src\coreEngine.cpp" />
     <ClCompile Include="src\graphics\material.cpp" />
     <ClCompile Include="src\graphics\mesh.cpp" />
     <ClCompile Include="src\graphics\renderingEngine.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
-    <ClCompile Include="src\graphics\constructs\transform.cpp" />
+    <ClCompile Include="src\graphics\transform.cpp" />
     <ClCompile Include="src\graphics\texture.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\maths\mat4.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="src\profiling\profileTimer.cpp" />
     <ClCompile Include="src\ResourceManagment\MeshResource.cpp" />
     <ClCompile Include="src\ResourceManagment\ShaderResource.cpp" />
+    <ClCompile Include="src\ResourceManagment\SpriteResource.cpp" />
     <ClCompile Include="src\ResourceManagment\TextureResource.cpp" />
     <ClCompile Include="src\util\logging.cpp" />
     <ClCompile Include="src\util\meshLoading\basicMeshs.cpp" />
@@ -194,25 +197,27 @@
   <ItemGroup>
     <ClInclude Include="external\debugScene.h" />
     <ClInclude Include="libs\stb_image.h" />
-    <ClInclude Include="src\architecture\component3D.h" />
+    <ClInclude Include="src\architecture\component.h" />
     <ClInclude Include="src\architecture\components\light\baseLight.h" />
     <ClInclude Include="src\architecture\components\camera\camera.h" />
     <ClInclude Include="src\architecture\components\components.h" />
     <ClInclude Include="src\architecture\components\light\directionalLight.h" />
-    <ClInclude Include="src\architecture\components\structureMod\FreeLook.h" />
+    <ClInclude Include="src\architecture\components\light\light2D.h" />
+    <ClInclude Include="src\architecture\components\object\meshRenderer.h" />
+    <ClInclude Include="src\architecture\components\structureMod\freeLook.h" />
     <ClInclude Include="src\architecture\components\structureMod\freeMove.h" />
-    <ClInclude Include="src\architecture\components\object\MeshRenderer.h" />
     <ClInclude Include="src\architecture\components\light\pointLight.h" />
     <ClInclude Include="src\architecture\layer.h" />
     <ClInclude Include="src\architecture\layer2D.h" />
     <ClInclude Include="src\architecture\layer3D.h" />
     <ClInclude Include="src\architecture\layerStack.h" />
-    <ClInclude Include="src\architecture\structure3D.h" />
+    <ClInclude Include="src\architecture\structure.h" />
     <ClInclude Include="src\architecture\application.h" />
     <ClInclude Include="src\coreEngine.h" />
     <ClInclude Include="src\graphics\material.h" />
     <ClInclude Include="src\graphics\mesh.h" />
     <ClInclude Include="src\graphics\renderingEngine.h" />
+    <ClInclude Include="src\architecture\components\object\sprite.h" />
     <ClInclude Include="src\graphics\texture.h" />
     <ClInclude Include="src\physics\Asolids.h" />
     <ClInclude Include="src\physics\obj_loader.h" />
@@ -222,6 +227,7 @@
     <ClInclude Include="src\ResourceManagment\Mapping.h" />
     <ClInclude Include="src\ResourceManagment\MeshResource.h" />
     <ClInclude Include="src\ResourceManagment\ShaderResource.h" />
+    <ClInclude Include="src\ResourceManagment\SpriteResource.h" />
     <ClInclude Include="src\ResourceManagment\TextureResource.h" />
     <ClInclude Include="src\util\logging.h" />
     <ClInclude Include="src\util\meshLoading\basicMeshs.h" />
@@ -229,7 +235,7 @@
     <ClInclude Include="src\util\meshLoading\meshLoading.h" />
     <ClInclude Include="src\util\meshLoading\objModel.h" />
     <ClInclude Include="src\util\time.h" />
-    <ClInclude Include="src\graphics\constructs\transform.h" />
+    <ClInclude Include="src\graphics\transform.h" />
     <ClInclude Include="src\graphics\shader.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\maths\mat4.h" />
@@ -244,9 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.f" />
-    <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.v" />
-    <None Include="res\shaders\basic.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Log.txt" />

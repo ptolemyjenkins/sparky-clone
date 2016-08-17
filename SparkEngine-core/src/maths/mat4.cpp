@@ -52,6 +52,15 @@ namespace sparky { namespace maths {
 		return other;
 	}
 
+	vec4 & mat4::transform(vec4 & other) const
+	{
+		other.set(	other.x * get(0, 0) + other.y * get(1, 0) + other.z * get(2, 0) + other.w * get(3, 0),
+					other.x * get(0, 1) + other.y * get(1, 1) + other.z * get(2, 1) + other.w * get(3, 1),
+					other.x * get(0, 2) + other.y * get(1, 2) + other.z * get(2, 2) + other.w * get(3, 2),
+					other.x * get(0, 3) + other.y * get(1, 3) + other.z * get(2, 3) + other.w * get(3, 3));
+		return other;
+	}
+
 	void mat4::transpose()
 	{
 		mat4 result = *this;
@@ -85,12 +94,22 @@ namespace sparky { namespace maths {
 	mat4 mat4::orthographic(float left, float right, float bottom, float top, float near, float far)
 	{
 		mat4 result(1.0f);
-		result.set(0, 0, (2 / (right - left)));
+		result.elements[0 + 0 * 4] = 2.0f / (right - left);
+
+		result.elements[1 + 1 * 4] = 2.0f / (top - bottom);
+
+		result.elements[2 + 2 * 4] = 2.0f / (near - far);
+
+		result.elements[0 + 3 * 4] = (left + right) / (left - right);
+		result.elements[1 + 3 * 4] = (bottom + top) / (bottom - top);
+		result.elements[2 + 3 * 4] = (far + near) / (far - near);
+
+		/*result.set(0, 0, (2 / (right - left)));
 		result.set(1, 1, (2 / (top - bottom)));
 		result.set(2, 2, (2 / (near - far)));
 		result.set(3, 0, ((right + left) / (left - right)));
 		result.set(3, 1, ((top + bottom) / (bottom - top)));
-		result.set(3, 2, ((far + near) / (far - near)));
+		result.set(3, 2, ((far + near) / (far - near)));*/
 		return result;
 	}
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "../../Component3D.h"
+#include "../../Component.h"
 #include "../../../graphics/window.h"
 namespace sparky { namespace components {
-	class freeMove : public architecture::Component3D {
+	class freeMove : public architecture::Component {
 	private:
 		float speed;
 		float movAmt;

@@ -39,9 +39,6 @@
     <ClCompile Include="src\profiling\profileTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\constructs\transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\coreEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,28 +108,40 @@
     <ClCompile Include="src\architecture\components\light\pointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\architecture\components\object\MeshRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\architecture\components\structureMod\FreeLook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\architecture\components\structureMod\freeMove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\architecture\layerStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\architecture\structure3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\architecture\component3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\architecture\layer3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\util\logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\structure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\layer2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\components\object\meshRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\components\structureMod\freeLook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManagment\SpriteResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\architecture\components\light\light2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -168,9 +177,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\profiling\profileTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\constructs\transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\coreEngine.h">
@@ -263,19 +269,7 @@
     <ClInclude Include="src\architecture\components\light\pointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\architecture\components\object\MeshRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\architecture\components\structureMod\FreeLook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\architecture\components\structureMod\freeMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\architecture\structure3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\architecture\component3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\architecture\layer2D.h">
@@ -284,12 +278,34 @@
     <ClInclude Include="src\architecture\layer3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphics\transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\structure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\components\object\sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\components\object\meshRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\components\structureMod\freeLook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManagment\SpriteResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\architecture\components\light\light2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.v" />
     <None Include="res\shaders\basic.f" />
-    <None Include="res\shaders\basic.frag" />
-    <None Include="res\shaders\basic.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Log.txt" />

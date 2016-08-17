@@ -13,6 +13,8 @@ namespace sparky { namespace graphics {
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_DEPTH_CLAMP);
+		glDepthMask(true);
+		glDepthFunc(GL_LESS);
 		//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}
 

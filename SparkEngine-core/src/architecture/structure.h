@@ -1,19 +1,19 @@
 #pragma once
 #include <vector>
-#include "component3D.h"
+#include "component.h"
 
 
 namespace sparky { namespace architecture {
-	class Structure3D
+	class Structure
 	{
 	private:
-		std::vector<Structure3D*> children;
-		std::vector<Component3D*> components;
+		std::vector<Structure*> children;
+		std::vector<Component*> components;
 		graphics::Transform transform;
 	public:
-		Structure3D();
-		void addChild(Structure3D* child);
-		Structure3D& addComponent(Component3D *component);
+		Structure();
+		void addChild(Structure* child);
+		Structure& addComponent(Component *component);
 
 		void input(const float& delta, graphics::Window* window);
 		void update(const float& delta);

@@ -5,7 +5,7 @@ namespace sparky { namespace architecture {
 	
 	}
 
-	void Application::init()
+	void Application::init(graphics::Window* window)
 	{
 		
 	}

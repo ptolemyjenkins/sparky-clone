@@ -10,6 +10,10 @@ namespace sparky { namespace components {
 		this->projection = maths::mat4().perspective(fov, aspect, zNear, zFar);
 	}
 
+	camera::camera(float left, float right, float bottom, float top, float near, float far) {
+		this->projection = maths::mat4().orthographic(left, right, bottom, top, near, far);
+	}
+
 	maths::mat4 camera::getViewProjection()
 	{
 		maths::mat4 cameraRotation = getTransform()->getTransformedRot().conjugate().toRotationMatrix();

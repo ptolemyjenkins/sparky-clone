@@ -47,11 +47,11 @@ namespace sparky { namespace graphics {
 		auto result = textureHashMap.find(name);
 		if (result != textureHashMap.end()) {
 			resource = result->second;
+			return resource;
 		}
 		else {
 			util::Logging::log_exit("Error: [TEXTURE] unable to retrieve <" + name + "> from texture HashMap.\n",1);
 		}
-		return resource;
 	}
 
 } }

@@ -1,8 +1,10 @@
 NVIDIA Corporation - 4.5.0 NVIDIA 368.81
 GeForce GTX 980 Ti/PCIe/SSE2 - 4.50 NVIDIA
-58.44 Fps-- Total: 17.28ms.  Input: 0.01ms.  Update: 0.01ms.  Render: 0.75ms.  Window: 0.07ms.  Sleep: 16.43ms.  Unaccounted: 0.01
-60.00 Fps-- Total: 16.67ms.  Input: 0.00ms.  Update: 0.00ms.  Render: 0.66ms.  Window: 0.19ms.  Sleep: 15.47ms.  Unaccounted: 0.34
-59.96 Fps-- Total: 16.68ms.  Input: 0.00ms.  Update: 0.00ms.  Render: 0.69ms.  Window: 0.07ms.  Sleep: 15.62ms.  Unaccounted: 0.29
-60.16 Fps-- Total: 16.85ms.  Input: 0.02ms.  Update: 0.00ms.  Render: 0.73ms.  Window: 0.09ms.  Sleep: 15.70ms.  Unaccounted: 0.31
-59.99 Fps-- Total: 16.67ms.  Input: 0.02ms.  Update: 0.00ms.  Render: 0.72ms.  Window: 0.06ms.  Sleep: 15.55ms.  Unaccounted: 0.31
-Error >> "mainCamfera" not found
+58.96 Fps-- Total: 16.97ms.  Input: 0.31ms.  Update: 7.60ms.  Render: 3.51ms.  Window: 0.08ms.  Sleep: 5.57ms.  Unaccounted: -0.11
+59.99 Fps-- Total: 16.67ms.  Input: 0.27ms.  Update: 7.19ms.  Render: 3.14ms.  Window: 0.07ms.  Sleep: 5.74ms.  Unaccounted: 0.26
+59.98 Fps-- Total: 16.67ms.  Input: 0.28ms.  Update: 7.15ms.  Render: 3.68ms.  Window: 0.07ms.  Sleep: 5.26ms.  Unaccounted: 0.23
+60.02 Fps-- Total: 16.93ms.  Input: 0.30ms.  Update: 7.49ms.  Render: 3.78ms.  Window: 0.05ms.  Sleep: 5.01ms.  Unaccounted: 0.29
+59.93 Fps-- Total: 16.70ms.  Input: 0.28ms.  Update: 7.25ms.  Render: 3.73ms.  Window: 0.05ms.  Sleep: 5.15ms.  Unaccounted: 0.25
+60.08 Fps-- Total: 16.89ms.  Input: 0.30ms.  Update: 7.29ms.  Render: 3.80ms.  Window: 0.06ms.  Sleep: 5.21ms.  Unaccounted: 0.23
+59.98 Fps-- Total: 16.67ms.  Input: 0.30ms.  Update: 7.26ms.  Render: 3.74ms.  Window: 0.06ms.  Sleep: 5.06ms.  Unaccounted: 0.24
+[Core Engine Terminated]

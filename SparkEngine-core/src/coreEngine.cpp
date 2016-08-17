@@ -25,7 +25,7 @@ namespace sparky {
 		window->build();
 		this->renderingEngine = new graphics::RenderingEngine();
 		app->setRenderingEngine(renderingEngine);
-		app->init();
+		app->init(window);
 
 		run();
 	}

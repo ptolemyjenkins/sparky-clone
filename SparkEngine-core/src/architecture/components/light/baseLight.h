@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Component3D.h"
+#include "../../Component.h"
 #include "../../../graphics/shader.h"
 
 namespace sparky { namespace components {
-	class baseLight : public architecture::Component3D {
+	class baseLight : public architecture::Component {
 	private:
 		maths::vec4 colour;
 		float intensity;

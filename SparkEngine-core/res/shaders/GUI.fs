@@ -1,10 +1,15 @@
-#version 330
+#version 330 core
+layout (location = 0) out vec4 fragColor;
 
 in vec2 texCoord0;
-out vec4 fragColor;
+in vec3 positions0;
 
-uniform sampler2D R_GUI;
+in DATA
+{
+	vec4 colour;
+} fs_in;
 
-void main(){
-	fragColor = texture(R_GUI,texCoord0.xy);
+void main()
+{
+	fragColor = fs_in.colour;
 }

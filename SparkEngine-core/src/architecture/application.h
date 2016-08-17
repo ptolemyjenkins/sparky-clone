@@ -9,7 +9,7 @@ namespace sparky { namespace architecture {
 		graphics::RenderingEngine * renderingEngine;
 	public:
 		Application();
-		virtual void init();
+		virtual void init(graphics::Window* window);
 		virtual void input(float delta, graphics::Window* window);
 		virtual void update(float delta);
 		

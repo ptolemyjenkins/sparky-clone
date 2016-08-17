@@ -1,5 +1,5 @@
 #pragma once
-#include "../../maths/maths.h"
+#include "../maths/maths.h"
 
 namespace sparky {	namespace graphics {
 	using namespace maths;

@@ -22,6 +22,7 @@ namespace sparky { namespace maths {
 
 		mat4& multiply(const mat4& other);
 		vec3& transform(vec3& other) const;
+		vec4& transform(vec4& other) const;
 
 		void transpose();
 		void display();

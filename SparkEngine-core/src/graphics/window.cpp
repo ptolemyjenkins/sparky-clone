@@ -17,18 +17,21 @@ namespace sparky { namespace graphics {
 		}
 	}
 	void Window::build() {
-		if (!init())
+		if (!init()) {
 			glfwTerminate();
+			exit(1);
+		}
 	}
 
 	bool Window::init()
 	{
 		if (!glfwInit())
 			util::Logging::log_exit("ERROR: glfw init failed", 1);
+		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL/*glfwGetPrimaryMonitor()*/, NULL);
 		if (!m_Window)
 		{
-			util::Logging::log_exit("ERROR: Failed to create GLFW Window",1);
+			util::Logging::log("ERROR: Failed to create GLFW Window");
 			return false;
 		}
 		glfwMakeContextCurrent(m_Window);

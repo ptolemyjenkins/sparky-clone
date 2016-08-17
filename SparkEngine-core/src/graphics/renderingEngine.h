@@ -1,6 +1,5 @@
 #pragma once
 #include "../architecture/layerStack.h"
-#include "../architecture/components/components.h"
 #include <memory>
 
 namespace sparky { namespace graphics {

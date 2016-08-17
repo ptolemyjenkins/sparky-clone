@@ -15,7 +15,7 @@ namespace sparky { namespace util {
 		model.indices = { 0,2,1,1,2,3 };
 		model.calcNormals();
 		model.calcTangents();
-		mesh->init(&model);
+		mesh->initModel(&model);
 	}
 
 	void BasicMesh::plane2Mesh(graphics::Mesh* mesh)
@@ -41,7 +41,7 @@ namespace sparky { namespace util {
 		model.indices = { 0,2,1,1,2,3,4,5,6,5,7,6 };
 		model.calcNormals();
 		model.calcTangents();
-		mesh->init(&model);
+		mesh->initModel(&model);
 	}
 
 	void BasicMesh::cubeMesh(graphics::Mesh * mesh)
@@ -107,7 +107,7 @@ namespace sparky { namespace util {
 							20,22,21,21,22,23 };
 		model.calcNormals();
 		model.calcTangents();
-		mesh->init(&model);
+		mesh->initModel(&model);
 	}
 
 	void BasicMesh::cube2Mesh(graphics::Mesh * mesh)
@@ -230,7 +230,7 @@ namespace sparky { namespace util {
 			44,45,46,45,47,46 };
 		model.calcNormals();
 		model.calcTangents();
-		mesh->init(&model);
+		mesh->initModel(&model);
 	}
 
 	void BasicMesh::cubeApproxMesh(graphics::Mesh * mesh)
@@ -264,7 +264,7 @@ namespace sparky { namespace util {
 			4,5,6,5,7,6 };
 		model.calcNormals();
 		model.calcTangents();
-		mesh->init(&model);
+		mesh->initModel(&model);
 	}
 
 
