@@ -66,7 +66,7 @@ namespace sparky { namespace architecture {
 				mesh->beginSprite();
 				for (components::Sprite* sprite : layer->spriteList)
 				{
-					mesh->submitSprite(sprite->getTransform(), sprite->getColor(), maths::vec2(0, 0), maths::vec2(0, 0));
+					mesh->submitSprite(sprite->getTransform(), sprite->getColor(), sprite->getBL(), sprite->getTR(), sprite->getTexID());
 				}
 				mesh->endSprite();
 				light->getShader()->updateUniforms(layer->meshList[0]->getTransform(), layer->meshList[0]->getMaterial(), renderingEngine, layer->activeCamera, light);

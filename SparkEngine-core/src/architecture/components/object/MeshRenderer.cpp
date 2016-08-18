@@ -7,10 +7,10 @@ namespace sparky {
 			this->material = material;
 		}
 
-		MeshRenderer::MeshRenderer()
+		MeshRenderer::MeshRenderer(std::vector<graphics::Texture*>* textureList)
 		{
 			this->mesh = new graphics::Mesh();
-			this->material = new graphics::Material();
+			this->material = new graphics::Material(textureList);
 		}
 
 		MeshRenderer::~MeshRenderer()

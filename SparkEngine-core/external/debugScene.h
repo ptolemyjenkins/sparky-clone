@@ -8,6 +8,5 @@ namespace sparky {
 		void init(graphics::Window* window);
 		void update(float delta);
 		void input(float delta, graphics::Window* window);
-		float counter=0;
 	};
 }

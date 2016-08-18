@@ -12,6 +12,7 @@ namespace sparky { namespace architecture {
 		std::unordered_map<std::string, components::Sprite*> sprites;
 		std::unordered_map<std::string, Component*> miscellaneous;
 		std::vector<components::Sprite*> spriteList;
+		std::vector<graphics::Texture*> textureList;
 		
 		
 		Layer2D();
@@ -24,6 +25,10 @@ namespace sparky { namespace architecture {
 		void addSprite(std::string name, components::Sprite* sprite, std::string parent);
 		void addMisc(std::string name, Component* misc, std::string parent);
 		void addStructure(std::string name, std::string parent);
+
+		void addTexture(graphics::Texture* tex);
+		void addTexture(int i, graphics::Texture* tex);
+
 
 		Structure* getStructure(std::string structure);
 		graphics::Transform* getTransform(std::string structure);

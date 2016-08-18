@@ -1,4 +1,5 @@
 #include "mesh.h"
+//#include <cstddef>
 namespace sparky { namespace graphics {
 	std::unordered_map<std::string, resource::MeshResource> Mesh::loadedModels;
 
@@ -127,27 +128,35 @@ namespace sparky { namespace graphics {
 		m_Buffer = (SpriteVertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
-	void Mesh::submitSprite(Transform* transform, maths::vec4& colour, maths::vec2& bleft, maths::vec2& tright)
+	void Mesh::submitSprite(Transform* transform, maths::vec4& colour, maths::vec2& bleft, maths::vec2& tright, int texID)
 	{
+		//bleft
 		maths::mat4 trans = transform->getTransformation();
 		m_Buffer->vertex = trans.transform(maths::vec4(-1, -1, 0, 1));
 		m_Buffer->color = colour;
 		m_Buffer->tex = bleft;
+		m_Buffer->textureNumber = texID;
 		m_Buffer++;
 
+		//tleft
 		m_Buffer->vertex = trans.transform(maths::vec4(-1, 1, 0, 1));
 		m_Buffer->color = colour;
 		m_Buffer->tex = maths::vec2(bleft.x, tright.y);
+		m_Buffer->textureNumber = texID;
 		m_Buffer++;
 
+		//bright
 		m_Buffer->vertex = trans.transform(maths::vec4(1, -1, 0, 1));
 		m_Buffer->color = colour;
 		m_Buffer->tex = maths::vec2(tright.x, bleft.y);
+		m_Buffer->textureNumber = texID;
 		m_Buffer++;
 
+		//tright
 		m_Buffer->vertex = trans.transform(maths::vec4(1, 1, 0, 1));
 		m_Buffer->color = colour;
 		m_Buffer->tex = tright;
+		m_Buffer->textureNumber = texID;
 		m_Buffer++;
 
 		spriteResource->size += 6;
@@ -165,11 +174,14 @@ namespace sparky { namespace graphics {
 		glEnableVertexAttribArray(SHADER_POSITION_INDEX);//position
 		glEnableVertexAttribArray(SHADER_COLOUR_INDEX);//colour
 		glEnableVertexAttribArray(SHADER_TEXCOORD_INDEX);//Tex-coord
+		glEnableVertexAttribArray(SHADER_TID_INDEX);//Tex-ID
+
 
 		glBindBuffer(GL_ARRAY_BUFFER, spriteResource->getVbo());
 		glVertexAttribPointer(SHADER_POSITION_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-		glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(4 * sizeof(GLfloat)));
-		glVertexAttribPointer(SHADER_TEXCOORD_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(8 * sizeof(GLfloat)));
+		glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(SpriteVertexData, SpriteVertexData::color)));
+		glVertexAttribPointer(SHADER_TEXCOORD_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(SpriteVertexData, SpriteVertexData::tex)));
+		glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(SpriteVertexData, SpriteVertexData::textureNumber)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spriteResource->getIbo());
 		glDrawElements(GL_TRIANGLES, spriteResource->getSize(), GL_UNSIGNED_INT, NULL);
@@ -177,6 +189,8 @@ namespace sparky { namespace graphics {
 		glDisableVertexAttribArray(SHADER_POSITION_INDEX);
 		glDisableVertexAttribArray(SHADER_COLOUR_INDEX);
 		glDisableVertexAttribArray(SHADER_TEXCOORD_INDEX);
+		glDisableVertexAttribArray(SHADER_TID_INDEX);
+
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

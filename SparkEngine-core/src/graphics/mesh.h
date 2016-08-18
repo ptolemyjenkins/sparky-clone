@@ -14,12 +14,14 @@ namespace sparky { namespace graphics {
 #define SHADER_POSITION_INDEX	0
 #define SHADER_COLOUR_INDEX		1
 #define SHADER_TEXCOORD_INDEX	2
+#define SHADER_TID_INDEX		3
 
 	struct SpriteVertexData
 	{
 		maths::vec4 vertex;
 		maths::vec4 color;
 		maths::vec2 tex;
+		int textureNumber;
 	};
 
 
@@ -42,7 +44,7 @@ namespace sparky { namespace graphics {
 		void initModel(util::IndexedModel* model);
 
 		void beginSprite();
-		void submitSprite(Transform* transform, maths::vec4& colour, maths::vec2& bleft, maths::vec2& tright);
+		void submitSprite(Transform* transform, maths::vec4& colour, maths::vec2& bleft, maths::vec2& tright, int texID);
 		void endSprite();
 
 		void draw();

@@ -143,9 +143,19 @@ namespace sparky { namespace graphics {
 			std::string uniformType = m_resource->getUniformTypes()[i];
 
 			if (uniformType == "sampler2D") {
-				int samplerSlot = renderingEngine->getSamplerSlot(uniformName);
-				material->getTexture(uniformName)->bind(samplerSlot);
-				setUniform1i(uniformName.c_str(), samplerSlot);
+				if (uniformName == "textures") {
+					for (std::unordered_map<std::string, Texture*>::iterator iter = material->textureHashMap.begin(); iter != material->textureHashMap.end(); ++iter)
+					{
+						int i = atoi(iter->first.c_str());
+						material->getTexture(std::to_string(i))->bind(i);
+					}
+					setUniform1iv("textures", &(material->getGLints())[0], (material->textureHashMap.size()));
+				}
+				else {
+					int samplerSlot = renderingEngine->getSamplerSlot(uniformName);
+					material->getTexture(uniformName)->bind(samplerSlot);
+					setUniform1i(uniformName.c_str(), samplerSlot);
+				}
 				continue;
 			}
 			else if (util::FileUtils::startsWith(uniformName,"T_")) {
@@ -228,7 +238,14 @@ namespace sparky { namespace graphics {
 			int end = util::FileUtils::find(shaderText, ";", start);
 			std::string uniformLine = util::FileUtils::trim(shaderText.substr(start, end - start));
 			int whiteSpacePos = util::FileUtils::find(uniformLine, " ", 0);
-			std::string uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, uniformLine.length()- whiteSpacePos - 1));
+			int endPos = util::FileUtils::find(uniformLine, "[", 0);
+			std::string uniformName;
+			if (endPos != -1) {
+				uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, endPos- whiteSpacePos - 1));
+			}
+			else {
+				uniformName = util::FileUtils::trim(uniformLine.substr(whiteSpacePos + 1, uniformLine.length() - whiteSpacePos - 1));
+			}
 			std::string uniformType = util::FileUtils::trim(uniformLine.substr(0, whiteSpacePos));
 			m_resource->getUniformNames().push_back(uniformName);
 			m_resource->getUniformTypes().push_back(uniformType);
@@ -340,6 +357,11 @@ namespace sparky { namespace graphics {
 	void Shader::setUniform1i(const GLchar * name, int value)
 	{
 		glUniform1i(getUniformLocation(name), value);
+	}
+
+	void Shader::setUniform1iv(const GLchar* name, int* value, int count)
+	{
+		glUniform1iv(getUniformLocation(name), count, value);
 	}
 
 	void Shader::setUniform2f(const GLchar * name, const maths::vec2 & vector)

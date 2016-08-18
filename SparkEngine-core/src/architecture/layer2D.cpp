@@ -7,11 +7,15 @@ namespace sparky {
 			components::Light2D* light2D = new components::Light2D(maths::vec4(1, 1, 1, 0), 1);
 			root.addComponent(light2D);
 			lightList.push_back(light2D);
-
-			components::MeshRenderer* mesh = new components::MeshRenderer();
-			mesh->getMesh()->initSpriteSheet();
-			root.addComponent(mesh);
-			meshList.push_back(mesh);
+			
+			components::MeshRenderer* meshRenderer = new components::MeshRenderer(&textureList);
+			meshRenderer->getMesh()->initSpriteSheet();
+			root.addComponent(meshRenderer);
+			meshList.push_back(meshRenderer);
+			for (int i = 0; i < 32; i++)
+			{
+				textureList.push_back(NULL);
+			}
 		}
 
 		Layer2D::~Layer2D()
@@ -130,6 +134,29 @@ namespace sparky {
 			Structure* newStructure = new Structure();
 			structures[name] = newStructure;
 			structure->addChild(newStructure);
+		}
+
+		void Layer2D::addTexture(graphics::Texture* tex)
+		{
+			for (int i = 0; i < 32; i++) {
+				if (textureList[i] != NULL) continue;
+				textureList[i] = tex;
+				meshList[0]->getMaterial()->updateTextures();
+				return;
+			}
+			util::Logging::log("Error [layer2D.cpp]: Texture could not be added as surpased texture limit (32)\n");
+		}
+
+		void Layer2D::addTexture(int i, graphics::Texture * tex)
+		{
+			if (i == 0) {
+				util::Logging::log("Error [layer2D.cpp]: 0 slot is reserved for colour only\n");
+			}
+			if (i > 32) {
+				util::Logging::log("Error [layer2D.cpp]: Texture could not be added as surpased texture limit (32)\n");
+			}
+			textureList[i-1] = tex;
+			meshList[0]->getMaterial()->updateTextures();
 		}
 
 		Structure * Layer2D::getStructure(std::string structure)

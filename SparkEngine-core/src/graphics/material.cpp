@@ -10,6 +10,20 @@ namespace sparky { namespace graphics {
 		addFloat("specularPower", 0.01f);
 		addFloat("dispMapScale", 0.0f);
 		addFloat("dispMapBias", 0.0f);
+		
+	}
+
+	Material::~Material()
+	{
+	}
+
+	Material::Material(std::vector<Texture*>* textureList)
+	{
+		this->textureList = textureList;
+		for (int i = 0; i < 32; i++)
+		{
+			texIDs.push_back(-1);
+		}
 	}
 
 	Material::Material(Texture * diffuse, float specularIntensity, float specularPower) : Material()
@@ -52,6 +66,31 @@ namespace sparky { namespace graphics {
 		else {
 			util::Logging::log_exit("Error: [TEXTURE] unable to retrieve <" + name + "> from texture HashMap.\n",1);
 		}
+	}
+
+	void Material::updateTextures()
+	{
+		for (unsigned int i = 0; i < textureList->size(); i++)
+		{
+			if ((*textureList)[i] == NULL) continue;
+			addSpriteTexture(std::to_string(i), (*textureList)[i]);
+		}
+	}
+
+	void Material::addSpriteTexture(const std::string & name, Texture * texture)
+	{
+		textureHashMap[name] = texture;
+		texIDs[(atoi(name.c_str()))] = (atoi(name.c_str()));
+	}
+
+	std::vector<GLint> Material::getGLints()
+	{
+		std::vector<GLint> b;
+		for (GLint a : texIDs) {
+			if (a == -1) continue;
+			b.push_back(a);
+		}
+		return b;
 	}
 
 } }

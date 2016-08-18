@@ -1,10 +1,4 @@
 NVIDIA Corporation - 4.5.0 NVIDIA 368.81
 GeForce GTX 980 Ti/PCIe/SSE2 - 4.50 NVIDIA
-58.96 Fps-- Total: 16.97ms.  Input: 0.31ms.  Update: 7.60ms.  Render: 3.51ms.  Window: 0.08ms.  Sleep: 5.57ms.  Unaccounted: -0.11
-59.99 Fps-- Total: 16.67ms.  Input: 0.27ms.  Update: 7.19ms.  Render: 3.14ms.  Window: 0.07ms.  Sleep: 5.74ms.  Unaccounted: 0.26
-59.98 Fps-- Total: 16.67ms.  Input: 0.28ms.  Update: 7.15ms.  Render: 3.68ms.  Window: 0.07ms.  Sleep: 5.26ms.  Unaccounted: 0.23
-60.02 Fps-- Total: 16.93ms.  Input: 0.30ms.  Update: 7.49ms.  Render: 3.78ms.  Window: 0.05ms.  Sleep: 5.01ms.  Unaccounted: 0.29
-59.93 Fps-- Total: 16.70ms.  Input: 0.28ms.  Update: 7.25ms.  Render: 3.73ms.  Window: 0.05ms.  Sleep: 5.15ms.  Unaccounted: 0.25
-60.08 Fps-- Total: 16.89ms.  Input: 0.30ms.  Update: 7.29ms.  Render: 3.80ms.  Window: 0.06ms.  Sleep: 5.21ms.  Unaccounted: 0.23
-59.98 Fps-- Total: 16.67ms.  Input: 0.30ms.  Update: 7.26ms.  Render: 3.74ms.  Window: 0.06ms.  Sleep: 5.06ms.  Unaccounted: 0.24
+58.99 Fps-- Total: 16.94ms.  Input: 0.02ms.  Update: 0.04ms.  Render: 0.31ms.  Window: 0.05ms.  Sleep: 16.45ms.  Unaccounted: 0.06
 [Core Engine Terminated]

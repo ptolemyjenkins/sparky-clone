@@ -11,7 +11,7 @@ namespace sparky {
 			graphics::Material* material;
 		public:
 			MeshRenderer(graphics::Mesh * mesh, graphics::Material * material);
-			MeshRenderer();
+			MeshRenderer(std::vector<graphics::Texture*>* textureList);
 			~MeshRenderer();
 			graphics::Mesh * getMesh();
 			graphics::Material * getMaterial();

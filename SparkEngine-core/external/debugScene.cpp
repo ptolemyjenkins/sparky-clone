@@ -14,7 +14,7 @@ namespace sparky {
 		graphics::Mesh* mesh1 = new graphics::Mesh();
 		util::BasicMesh::cubeMesh(mesh1);
 		components::MeshRenderer* renderer1 = new components::MeshRenderer(mesh1, material1);
-		components::MeshRenderer* renderer2 = new components::MeshRenderer(new graphics::Mesh("skinner1.obj"), material);
+		components::MeshRenderer* renderer2 = new components::MeshRenderer(mesh1 /*new graphics::Mesh("skinner1.obj")*/, material);
 		testLayer3D->addStructure("base");
 		testLayer3D->addStructure("box1Struct", "base");
 		testLayer3D->addStructure("skinnerStruct", "base");
@@ -50,21 +50,18 @@ namespace sparky {
 		testLayer3D->visible = false;
 		scene.addLayer3D(testLayer3D);
 
+		float x = window->getWidth();
+		float y = window->getHeight();
 
 		architecture::Layer2D* testLayer2D = new architecture::Layer2D;
-		
-		int x = window->getWidth();
-		int y = window->getHeight();
-		components::camera* cam2D = new components::camera(0,x,0,y,-1000,1000);
-		srand(time(NULL));
+		components::camera* cam2D = new components::camera(-5, 5, -5 * y / x, 5 * y / x, -1, 1);
 		testLayer2D->addCamera("mainCamera2D", cam2D, "camStruct2D");
-		for (int i=0; i < 100; i++) {
-			for (int j=0; j < 100; j++) {
-				testLayer2D->addSprite(std::to_string(i*100+j), new components::Sprite(maths::vec4(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f,1)), std::to_string(i * 100 + j));
-				testLayer2D->getTransform(std::to_string(i * 100 + j))->scale.set(5, 5, 1);
-				testLayer2D->getTransform(std::to_string(i * 100 + j))->pos.set(i * x/100.0f+10,j* y/100.0f+10,100);
-			}
-		}
+		testLayer2D->addSprite("test", new components::Sprite(maths::vec4(1,1,1,1), maths::vec4(0,1,1,0),2), "spriteStruct");
+		testLayer2D->addSprite("test2", new components::Sprite(maths::vec4(1, 1, 1, 1), maths::vec4(0, 1, 1, 0), 1), "spriteStruct2");
+		testLayer2D->getStructure("spriteStruct2")->getTransform()->pos.set(0, -2, 0);
+		testLayer2D->addTexture(1,new graphics::Texture("Debug.png"));
+		testLayer2D->addTexture(2, new graphics::Texture("American_Typewriter.png"));
+
 		testLayer2D->visible = true;
 		scene.addLayer2D(testLayer2D);
 
@@ -75,16 +72,6 @@ namespace sparky {
 		architecture::Layer3D* layer3D = (scene.getLayer3D(0));
 		architecture::Layer2D* layer2D =  (scene.getLayer2D(0));
 		layer3D->getTransform("directionalLightStruct")->rotateTrans(maths::quaternion(maths::vec3(0, 1, 0), delta*8));
-		srand(time(NULL));
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				layer2D->getTransform(std::to_string(i * 100 + j))->rotateTrans(maths::quaternion(maths::vec3(i/100.0f, j/100, i+j/200), sin(i*j/20) *1000 *  delta));
-				layer2D->getTransform(std::to_string(i * 100 + j))->rotateTrans(maths::quaternion(maths::vec3(0, 0, 1), 100 * delta));
-				layer2D->getTransform(std::to_string(i * 100 + j))->pos.y += sin((i/16.0)+counter*2)*25;
-
-			}
-		}
-		counter += delta;
 	}
 
 	void DebugScene::input(float delta, graphics::Window * window)
